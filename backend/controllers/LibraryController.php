@@ -8,6 +8,7 @@ use backend\models\LibrarySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use kartik\mpdf\Pdf;
 
 /**
  * LibraryController implements the CRUD actions for Library model.
@@ -108,6 +109,7 @@ class LibraryController extends Controller
         $searchModel = new LibrarySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $html = $this ->renderPartial('pdf_view', ['dataProvider' =>$dataProvider]);
+        $html = $this ->renderPartial('clinical', ['dataProvider' =>$dataProvider]);
         $mpdf = new \Mpdf\Mpdf();
         $mpdf ->showImageErrors = true;
         $mpdf ->SetDisplayMode('fullpage','two');
@@ -115,12 +117,18 @@ class LibraryController extends Controller
         $mpdf ->writeHTML($html);
         $mpdf ->Output();
         $mpdf = new pdf([
-            'format' => Pdf::FORMAT_LEGAL
+            'format' => Pdf::FORMAT_LEGAL,
 
-        ]);
-        exit;
+            'methods' => [
+                'SetHeader' => ['ddawdadawd'],
+                'SetFooter' => ['{PageNo}']
+            ]
+            ]
+        );
+       return $mpdf->render();
     }
-   
+
+       
 
     /**
      * Finds the Library model based on its primary key value.
@@ -131,7 +139,7 @@ class LibraryController extends Controller
      */
     protected function findModel($Book_ID)
     {
-        if (($model = Library::findOne($id)) !== null) {
+        if (($model = Library::findOne($Book_ID)) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
