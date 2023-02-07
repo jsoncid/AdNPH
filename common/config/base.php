@@ -1,6 +1,6 @@
 <?php
 $config = [
-    'name' => 'Yii2 Starter Kit',
+    'name' => 'AdN Provincial Hospital',
     'vendorPath' => __DIR__ . '/../../vendor',
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
     'sourceLanguage' => 'en-US',
@@ -63,6 +63,16 @@ $config = [
             'password' => env('DB_PASSWORD'),
             'tablePrefix' => env('DB_TABLE_PREFIX'),
             'charset' => env('DB_CHARSET', 'utf8'),
+            'enableSchemaCache' => YII_ENV_PROD,
+        ],
+
+        'db2' => [
+            'class' => yii\db\Connection::class,
+            'dsn' => env('DB_DSN2'),
+            'username' => env('DB_USERNAME2'),
+            'password' => env('DB_PASSWORD2'),
+            'tablePrefix' => env('DB_TABLE_PREFIX2'),
+            'charset' => env('DB_CHARSET2', 'utf8'),
             'enableSchemaCache' => YII_ENV_PROD,
         ],
 

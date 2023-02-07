@@ -20,6 +20,8 @@ $config = [
         ],
     ],
     'modules' => [
+
+
         'content' => [
             'class' => backend\modules\content\Module::class,
         ],
@@ -39,6 +41,8 @@ $config = [
             'class' => backend\modules\rbac\Module::class,
             'defaultRoute' => 'rbac-auth-item/index',
         ],
+
+
     ],
     'as globalAccess' => [
         'class' => common\behaviors\GlobalAccessBehavior::class,
