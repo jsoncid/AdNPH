@@ -49,6 +49,11 @@ class PageController extends Controller
         ]);
     }
 
+
+
+
+
+
     /**
      * @return mixed
      */
@@ -97,6 +102,21 @@ class PageController extends Controller
 
         return $this->redirect(['index']);
     }
+
+    public function actionNurse_station_patient()
+    {
+ 
+        return $this->render('nurse_station_patient', [
+        ]);
+    }
+
+    public function actionBed_tracker()
+    {
+ 
+        return $this->render('bed_tracker', [
+        ]);
+    }
+
 
     /**
      * @param integer $id

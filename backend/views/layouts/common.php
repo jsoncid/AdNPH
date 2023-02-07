@@ -53,7 +53,8 @@ $logEntries[] = [
 <?php $this->beginContent('@backend/views/layouts/base.php'); ?>
 <div class="wrapper">
     <!-- navbar -->
-    <?php NavBar::begin([
+    <?php 
+        NavBar::begin([
         'renderInnerContainer' => false,
         'options' => [
             'class' => [
@@ -90,11 +91,12 @@ $logEntries[] = [
             'options' => ['class' => ['navbar-nav', 'ml-auto']],
             'encodeLabels' => false,
             'items' => [
-                [
+                //[
                     // timeline events
-                    'label' => FAR::icon('bell').' <span class="badge badge-success navbar-badge">'.TimelineEvent::find()->today()->count().'</span>',
-                    'url'  => ['/timeline-event/index']
-                ],
+                    //'label' => FAR::icon('bell').' <span class="badge badge-success navbar-badge">'.TimelineEvent::find()->today()->count().'</span>',
+                    //'url'  => ['/timeline-event/index']
+                //],
+                /*
                 [
                     // log events
                     'label' => FAS::icon('clipboard-list').' <span class="badge badge-warning navbar-badge">'.SystemLog::find()->count().'</span>',
@@ -105,18 +107,19 @@ $logEntries[] = [
                     ],
                     'items' => $logEntries,
                 ],
+                */
                 '<li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        '.Html::img(Yii::$app->user->identity->userProfile->getAvatar('/img/anonymous.png'), ['class' => ['img-circle', 'elevation-2', 'bg-white', 'user-image'], 'alt' => 'User image']).'
+                        '.Html::img(Yii::$app->user->identity->userProfile->getAvatar('@web/img/anonymous.png'), ['class' => ['img-circle', 'elevation-2', 'bg-white', 'user-image'], 'alt' => 'User image']).'
                         '.Html::tag('span', Yii::$app->user->identity->publicIdentity, ['class' => ['d-none', 'd-md-inline']]).'
                     </a>
+                
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <!-- User image -->
                         <li class="user-header bg-primary">
-                            '.Html::img(Yii::$app->user->identity->userProfile->getAvatar('/img/anonymous.png'), ['class' => ['img-circle', 'elevation-2', 'bg-white'], 'alt' => 'User image']).'
+                            '.Html::img(Yii::$app->user->identity->userProfile->getAvatar('@web/img/anonymous.png'), ['class' => ['img-circle', 'elevation-2', 'bg-white'], 'alt' => 'User image']).'
                             <p>
                                 '.Yii::$app->user->identity->publicIdentity.'
-                                <small>'.Yii::t('backend', 'Member since {0, date, short}', Yii::$app->user->identity->created_at).'</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
@@ -167,7 +170,7 @@ $logEntries[] = [
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
                     <?php echo Html::img(
-                        Yii::$app->user->identity->userProfile->getAvatar('/img/anonymous.png'),
+                        Yii::$app->user->identity->userProfile->getAvatar('@web/img/anonymous.png'),
                         ['class' => ['img-circle', 'elevation-2', 'bg-white'], 'alt' => 'User image']
                     ) ?>
                 </div>
@@ -211,12 +214,50 @@ $logEntries[] = [
                             'badgeBgClass' => 'badge-success',
                         ],
                         [
-                            'label' => Yii::t('backend', 'Users'),
-                            'icon' => FAS::icon('users', ['class' => ['nav-icon']]),
-                            'url' => ['/user/index'],
-                            'active' => Yii::$app->controller->id === 'user',
-                            'visible' => Yii::$app->user->can('administrator'),
+                            'label' => Yii::t('backend', 'Nurse Station'),
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'url' => ['/content/page/nurse_station_patient'],
+                            //'url' => ['/timeline-event/index'],
+                            //'badge' => TimelineEvent::find()->today()->count(),
+                            //'badgeBgClass' => 'badge-success',
                         ],
+                        [
+                            'label' => Yii::t('backend', 'Bed Tracker'),
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'url' => ['/content/page/bed_tracker'],
+                            //'url' => ['/timeline-event/index'],
+                            //'badge' => TimelineEvent::find()->today()->count(),
+                            //'badgeBgClass' => 'badge-success',
+                        ],
+
+                        [
+                            'label' => Yii::t('backend', 'Admission'),
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'url' => ['/content/hadmlog'],
+                            //'url' => ['/timeline-event/index'],
+                            //'badge' => TimelineEvent::find()->today()->count(),
+                            //'badgeBgClass' => 'badge-success',
+
+                            //[
+                            //    'label' => Yii::t('backend', 'Assignments'),
+                            //    'url' => ['/rbac/rbac-auth-assignment/index'],
+                            //    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                            //],
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Discharges'),
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'url' => ['/content/page/index'],
+                            //'url' => ['/timeline-event/index'],
+                            //'badge' => TimelineEvent::find()->today()->count(),
+                            //'badgeBgClass' => 'badge-success',
+                        ],
+
+
+
+
+
+
                         [
                             'label' => Yii::t('backend', 'Content'),
                             'options' => ['class' => 'nav-header'],
@@ -291,6 +332,13 @@ $logEntries[] = [
                         [
                             'label' => Yii::t('backend', 'System'),
                             'options' => ['class' => 'nav-header'],
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Users'),
+                            'icon' => FAS::icon('users', ['class' => ['nav-icon']]),
+                            'url' => ['/user/index'],
+                            'active' => Yii::$app->controller->id === 'user',
+                            'visible' => Yii::$app->user->can('administrator'),
                         ],
                         [
                             'label' => Yii::t('backend', 'RBAC Rules'),
@@ -419,7 +467,7 @@ $logEntries[] = [
 
     <!-- footer -->
     <footer class="main-footer <?php echo $keyStorage->get('adminlte.footer-small-text') ? 'text-sm' : null ?>">
-        <strong>&copy; My Company <?php echo date('Y') ?></strong>
+        <strong>&copy; Agusan del Norte Provincial Hospital <?php echo date('Y') ?></strong>
         <div class="float-right d-none d-sm-inline-block"><?php echo Yii::powered() ?></div>
     </footer>
     <!-- /footer -->
