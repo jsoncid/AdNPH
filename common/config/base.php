@@ -66,6 +66,16 @@ $config = [
             'enableSchemaCache' => YII_ENV_PROD,
         ],
 
+        'db2' => [
+            'class' => yii\db\Connection::class,
+            'dsn' => env('DB_DSN2'),
+            'username' => env('DB_USERNAME2'),
+            'password' => env('DB_PASSWORD2'),
+            'tablePrefix' => env('DB_TABLE_PREFIX2'),
+            'charset' => env('DB_CHARSET2', 'utf8'),
+            'enableSchemaCache' => YII_ENV_PROD,
+        ],
+
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

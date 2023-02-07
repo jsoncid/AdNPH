@@ -233,10 +233,16 @@ $logEntries[] = [
                         [
                             'label' => Yii::t('backend', 'Admission'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
-                            'url' => ['/content/page/index'],
+                            'url' => ['/content/hadmlog'],
                             //'url' => ['/timeline-event/index'],
                             //'badge' => TimelineEvent::find()->today()->count(),
                             //'badgeBgClass' => 'badge-success',
+
+                            //[
+                            //    'label' => Yii::t('backend', 'Assignments'),
+                            //    'url' => ['/rbac/rbac-auth-assignment/index'],
+                            //    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                            //],
                         ],
                         [
                             'label' => Yii::t('backend', 'Discharges'),
