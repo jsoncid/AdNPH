@@ -11,12 +11,14 @@ use yii\grid\GridView;
 
 $this->title = 'Libraries';
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['df'][] = $this->title;
 ?>
 <div class="library-index">
     <div class="card">
         <div class="card-header">
             <?php echo Html::a('Create Library', ['create'], ['class' => 'btn btn-success']) ?>
             <?php echo Html::a('Export PDF', ['pdf'], ['class' => 'btn btn-danger']) ?>
+            <?php echo Html::a('PDF Clinical', ['pdf'], ['class' => 'btn btn-danger']) ?>
         </div>
 
         <div class="card-body p-0">

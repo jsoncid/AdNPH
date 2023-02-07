@@ -27,9 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 
     .timesdate{
-        position: relative;
-        bottom: 8px;
          font-size: 18px;
+
+    }
+    .footer{
+        position: relative;
+        display: inline-block;
 
     }
     .container{
@@ -45,23 +48,24 @@ $this->params['breadcrumbs'][] = $this->title;
    .image{
         margin-bottom: -7rem;
         margin-left: 7.8rem;
-        position: absolute;
+        position: relative;
         text-align: left;
         display: inline-block;
     }
     .image2{
         margin-top: -8rem;
         margin-right: 7.8rem;
-        position: absolute;
+        position: relative;
         text-align: right;
-        display: inline-block;
     }
     
 
 </style>
-<div class="container">
+
+
+<header class="container">
     <div class= "image">
-        <?php echo Html::img('@web/img/adnlogo.jpg', ['alt' => 'adnlogo', 'style' => 'width:100px;height: 100px']); ?>
+    <?php echo Html::img('@web/img/adnlogo.jpg', ['alt' => 'adnlogo', 'style' => 'width:100px;height: 100px']); ?>
     </div>
         <div class= "header">
              Republic of the Philippines <br>
@@ -73,7 +77,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class= "image2">
                 <?php echo Html::img('@web/img/phologo.jpg', ['alt' => 'phologo', 'style' => 'width:100px;height: 100px']); ?>
             </div>
-</div>
+</header>
+
+
 <hr style="height: 5px;
            background: teal;
            margin: 20px 0;
@@ -107,6 +113,7 @@ $this->params['breadcrumbs'][] = $this->title;
            margin: 20px 0;
            box-shadow: 0px 0px 4px 2px rgba(204,204,204,1);">
 
+<footer class = "footer">
 <div class="timesdate">
     Date:
     <?php echo date ("Y-m-d");?>
@@ -114,3 +121,4 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php date_default_timezone_set("Hongkong");
         echo date ("h:i a"); ?>
 </div>
+</footer>
