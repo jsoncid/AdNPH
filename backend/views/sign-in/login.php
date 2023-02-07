@@ -6,7 +6,7 @@ use yii\bootstrap4\ActiveForm;
 /* @var $form yii\bootstrap4\ActiveForm */
 /* @var $model \backend\models\LoginForm */
 
-$this->title = Yii::t('backend', 'Sign In');
+$this->title = Yii::t('backend', 'AdN Provincial Hospital');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['body-class'] = 'login-page';
 ?>
