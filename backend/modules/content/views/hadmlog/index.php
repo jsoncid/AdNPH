@@ -188,7 +188,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     
-                    
                     /*
                     [
                         'label'=>'Contact #',
@@ -255,6 +254,30 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                     },
                     ],
+                    
+
+                    /*
+                    ['class' => 'yii\grid\ActionColumn', 'template'=>'{print} <br> {clinical} <br> {laboratory} <br> {otherlaboratory} <br> {radiologyrequest} <br> {tag} <br> {surgical} <br> {cf4} <br> {newborninformation}',
+                    'buttons'=>[
+
+                        'print' => function ($url, $model) {
+                        //return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-print"></span> chart'),
+                        return Html::a(Yii::t('app', 'Chart'),
+                            ['print',
+                                //'hpercode' =>$model->hpercode,
+                                //'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
+                                //'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
+                                //'patage' => intval($model->patage).' yr/s',
+                            ]);
+                        },
+                        
+                        ],
+                        
+                        'contentOptions'=>['style'=>'width: 150px;']
+                        
+                    ],
+                    */
+
                     
 
                     //'disdate' => $this->disdate,

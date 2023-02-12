@@ -206,6 +206,7 @@ $logEntries[] = [
                             'label' => Yii::t('backend', 'Main'),
                             'options' => ['class' => 'nav-header'],
                         ],
+                        /*
                         [
                             'label' => Yii::t('backend', 'Timeline'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
@@ -213,18 +214,20 @@ $logEntries[] = [
                             'badge' => TimelineEvent::find()->today()->count(),
                             'badgeBgClass' => 'badge-success',
                         ],
+                        
                         [
-                            'label' => Yii::t('backend', 'Nurse Station'),
+                            'label' => Yii::t('backend', 'Ward'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
                             'url' => ['/content/page/nurse_station_patient'],
                             //'url' => ['/timeline-event/index'],
                             //'badge' => TimelineEvent::find()->today()->count(),
                             //'badgeBgClass' => 'badge-success',
                         ],
+                        */
                         [
-                            'label' => Yii::t('backend', 'Bed Tracker'),
+                            'label' => Yii::t('backend', 'Hospital Wards'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
-                            'url' => ['/content/page/bed_tracker'],
+                            'url' => ['/content/hward'],
                             //'url' => ['/timeline-event/index'],
                             //'badge' => TimelineEvent::find()->today()->count(),
                             //'badgeBgClass' => 'badge-success',
@@ -237,12 +240,6 @@ $logEntries[] = [
                             //'url' => ['/timeline-event/index'],
                             //'badge' => TimelineEvent::find()->today()->count(),
                             //'badgeBgClass' => 'badge-success',
-
-                            //[
-                            //    'label' => Yii::t('backend', 'Assignments'),
-                            //    'url' => ['/rbac/rbac-auth-assignment/index'],
-                            //    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
-                            //],
                         ],
                         [
                             'label' => Yii::t('backend', 'Discharges'),
@@ -255,8 +252,8 @@ $logEntries[] = [
 
 
 
-
-
+                        
+                        /*
 
                         [
                             'label' => Yii::t('backend', 'Content'),
@@ -329,6 +326,8 @@ $logEntries[] = [
                             'active' => (Yii::$app->controller->module->id == 'translation'),
                             'visible' => Yii::$app->components["i18n"]["translations"]['*']['class'] === \yii\i18n\DbMessageSource::class,
                         ],
+
+                        */
                         [
                             'label' => Yii::t('backend', 'System'),
                             'options' => ['class' => 'nav-header'],
