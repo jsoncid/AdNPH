@@ -242,7 +242,7 @@ $logEntries[] = [
                             //'badgeBgClass' => 'badge-success',
                         ],
                         [
-                            'label' => Yii::t('backend', 'Discharges'),
+                            'label' => Yii::t('backend', 'Records'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
                             'url' => ['/content/page/index'],
                             //'url' => ['/timeline-event/index'],
