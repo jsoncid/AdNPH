@@ -206,6 +206,7 @@ $logEntries[] = [
                             'label' => Yii::t('backend', 'Main'),
                             'options' => ['class' => 'nav-header'],
                         ],
+                        /*
                         [
                             'label' => Yii::t('backend', 'Timeline'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
@@ -213,14 +214,48 @@ $logEntries[] = [
                             'badge' => TimelineEvent::find()->today()->count(),
                             'badgeBgClass' => 'badge-success',
                         ],
+                        
                         [
-                            'label' => Yii::t('backend', 'Nurse Station'),
+
+                            'label' => Yii::t('backend', 'Ward'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
                             'url' => ['/content/page/nurse_station_patient'],
                             //'url' => ['/timeline-event/index'],
                             //'badge' => TimelineEvent::find()->today()->count(),
                             //'badgeBgClass' => 'badge-success',
                         ],
+                        */
+                        [
+                            'label' => Yii::t('backend', 'Hospital Wards'),
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'url' => ['/content/hward'],
+                            //'url' => ['/timeline-event/index'],
+                            //'badge' => TimelineEvent::find()->today()->count(),
+                            //'badgeBgClass' => 'badge-success',
+                        ],
+
+                        [
+                            'label' => Yii::t('backend', 'Admission'),
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'url' => ['/content/hadmlog'],
+                            //'url' => ['/timeline-event/index'],
+                            //'badge' => TimelineEvent::find()->today()->count(),
+                            //'badgeBgClass' => 'badge-success',
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Records'),
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'url' => ['/content/page/index'],
+                            //'url' => ['/timeline-event/index'],
+                            //'badge' => TimelineEvent::find()->today()->count(),
+                            //'badgeBgClass' => 'badge-success',
+                        ],
+
+
+
+                        
+                        /*
+
                         [
                             'label' => Yii::t('backend', 'Bed Tracker'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
@@ -329,6 +364,8 @@ $logEntries[] = [
                             'active' => (Yii::$app->controller->module->id == 'translation'),
                             'visible' => Yii::$app->components["i18n"]["translations"]['*']['class'] === \yii\i18n\DbMessageSource::class,
                         ],
+
+                        */
                         [
                             'label' => Yii::t('backend', 'System'),
                             'options' => ['class' => 'nav-header'],

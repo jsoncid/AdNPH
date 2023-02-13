@@ -58,7 +58,9 @@ class HadmlogSearch extends Hadmlog
             return $dataProvider;
         }
 
-        
+
+        /*
+
 
         $query->andFilterWhere([
             'patage' => $this->patage,
@@ -122,7 +124,9 @@ class HadmlogSearch extends Hadmlog
             ->andFilterWhere(['like', 'lockby', $this->lockby])
             ->andFilterWhere(['like', 'typadm', $this->typadm])
             ->andFilterWhere(['like', 'pho_hospital_number', $this->pho_hospital_number]);
-           
+
+           */
+
         return $dataProvider;
     }
 }

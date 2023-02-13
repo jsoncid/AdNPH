@@ -8,8 +8,10 @@ use backend\modules\content\models\search\HadmlogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 use kartik\mpdf\Pdf;
 use common\models\Hperson;
+
 
 /**
  * HadmlogController implements the CRUD actions for Hadmlog model.
@@ -56,6 +58,7 @@ class HadmlogController extends Controller
             'model' => $this->findModel($enccode),
         ]);
     }
+
 
     /**
      * Creates a new Hadmlog model.
@@ -290,6 +293,22 @@ public function actionLaboratory($hpercode)
         return $this->redirect(['index']);
     }
 
+    public function actionPrint()
+    {
+        return "im here";
+        /*
+        $searchModel = new HadmlogSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+        */
+    }
+
+
+
     /**
      * Finds the Hadmlog model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -297,6 +316,7 @@ public function actionLaboratory($hpercode)
      * @return Hadmlog the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+
     protected function findModel($hpercode)
 
     {
@@ -306,5 +326,13 @@ public function actionLaboratory($hpercode)
 
         throw new NotFoundHttpException('The requested page does not exist.');
     
+
+    protected function findModel($enccode)
+    {
+        if (($model = Hadmlog::findOne($id)) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+
     }
 }
