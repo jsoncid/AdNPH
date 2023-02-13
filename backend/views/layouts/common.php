@@ -216,6 +216,7 @@ $logEntries[] = [
                         ],
                         
                         [
+
                             'label' => Yii::t('backend', 'Ward'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
                             'url' => ['/content/page/nurse_station_patient'],
@@ -254,6 +255,43 @@ $logEntries[] = [
 
                         
                         /*
+
+                        [
+                            'label' => Yii::t('backend', 'Bed Tracker'),
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'url' => ['/content/page/bed_tracker'],
+                            //'url' => ['/timeline-event/index'],
+                            //'badge' => TimelineEvent::find()->today()->count(),
+                            //'badgeBgClass' => 'badge-success',
+                        ],
+
+                        [
+                            'label' => Yii::t('backend', 'Admission'),
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'url' => ['/content/hadmlog'],
+                            //'url' => ['/timeline-event/index'],
+                            //'badge' => TimelineEvent::find()->today()->count(),
+                            //'badgeBgClass' => 'badge-success',
+
+                            //[
+                            //    'label' => Yii::t('backend', 'Assignments'),
+                            //    'url' => ['/rbac/rbac-auth-assignment/index'],
+                            //    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                            //],
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Discharges'),
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'url' => ['/content/page/index'],
+                            //'url' => ['/timeline-event/index'],
+                            //'badge' => TimelineEvent::find()->today()->count(),
+                            //'badgeBgClass' => 'badge-success',
+                        ],
+
+
+
+
+
 
                         [
                             'label' => Yii::t('backend', 'Content'),

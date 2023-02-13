@@ -1,4 +1,5 @@
 <?php
+use kartik\mpdf\Pdf;
 $config = [
     'components' => [
         'assetManager' => [
