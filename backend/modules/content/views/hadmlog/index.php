@@ -259,214 +259,122 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['class' => 'yii\grid\ActionColumn', 'template'=>'{print} <br> {clinical} <br> {laboratory} <br> {otherlaboratory} <br> {radiologyrequest} <br> {tag} <br> {surgical} <br> {cf4} <br> {newborninformation}',
                 'buttons'=>[
         
-                        'print' => function($url, $model){
-                            return Html::a(Yii::t('app', 'Chart'),
-                            ['print',
-                               'hpercode' =>$model->hpercode,
-                             'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
+                            'print' => function($url, $model){
+                                    return Html::a(Yii::t('app', 'Chart'),
+                                    ['print',
+                                    'hpercode' =>$model->hpercode,
+                                    'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
+                                        'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
+                                        'patage' => intval($model->patage).' yr/s',
+                                    ]
+                                );
+                            },
+                    
+                                'clinical' => function($url, $model){
+                                    return Html::a(Yii::t('app','Clinical Chem Request'),
+                                    ['clinical',
+                                    'hpercode' =>$model->hpercode,
+                                    'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
+                                    'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
+                                    'patage' => intval($model->patage).' yr/s',
+                                    ]
+                                );
+                            },
+
+                            'laboratory' => function($url, $model){
+                                return Html::a(Yii::t('app', 'Laboratory'),
+                                ['laboratory',
+                                'hpercode' =>$model->hpercode,
+                                'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
                                 'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
                                 'patage' => intval($model->patage).' yr/s',
-                            ]
-                        );
-                    },
-            
-                        'clinical' => function($url, $model){
-                            return Html::a(Yii::t('app','Clinical Chem Request'),
-                            ['clinical',
-                            'hpercode' =>$model->hpercode,
-                            'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
-                            'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
-                            'patage' => intval($model->patage).' yr/s',
-                            ]
-                        );
-                     },
-
-                     'laboratory' => function($url, $model){
-                        return Html::a(Yii::t('app', 'Laboratory'),
-                        ['laboratory',
-                        'hpercode' =>$model->hpercode,
-                        'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
-                        'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
-                        'patage' => intval($model->patage).' yr/s',
-                        ]
-                     );
-                },
-                    'otherlaboratory' => function($url, $model){
-                        return Html::a(Yii::t('app', 'Other Laboratory'),
-                        ['otherlaboratory',
-                        'hpercode' =>$model->hpercode,
-                        'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
-                        'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
-                        'patage' => intval($model->patage).' yr/s',
-                        ]
-                    );
-                    },
-                    'radiologyrequest' => function($url, $model){
-                        return Html::a(Yii::t('app', 'Radiology Request'),
-                        ['radiologyrequest',
-                        'hpercode' =>$model->hpercode,
-                        'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
-                        'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
-                        'patage' => intval($model->patage).' yr/s',
-                        ]
-                    );
-                    },
-                    'tag' => function($url, $model){
-                        return Html::a(Yii::t('app', 'Tag'),
-                        ['tag',
-                        'hpercode' =>$model->hpercode,
-                        'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
-                        'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
-                        'patage' => intval($model->patage).' yr/s',
-                        ]
-                    );
-                    },
+                                ]
+                            );
+                            },
+                            'otherlaboratory' => function($url, $model){
+                                return Html::a(Yii::t('app', 'Other Laboratory'),
+                                ['otherlaboratory',
+                                'hpercode' =>$model->hpercode,
+                                'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
+                                'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
+                                'patage' => intval($model->patage).' yr/s',
+                                ]
+                            );
+                            },
+                            'radiologyrequest' => function($url, $model){
+                                return Html::a(Yii::t('app', 'Radiology Request'),
+                                ['radiologyrequest',
+                                'hpercode' =>$model->hpercode,
+                                'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
+                                'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
+                                'patage' => intval($model->patage).' yr/s',
+                                ]
+                            );
+                            },
+                            'tag' => function($url, $model){
+                                return Html::a(Yii::t('app', 'Tag'),
+                                ['tag',
+                                'hpercode' =>$model->hpercode,
+                                'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
+                                'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
+                                'patage' => intval($model->patage).' yr/s',
+                                ]
+                            );
+                            },
 
 
 
 
-                    'surgical' => function($url, $model){
-                        return Html::a(Yii::t('app', 'Surgical'),
-                        ['surgical',
-                        'hpercode' =>$model->hpercode,
-                        'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
-                        'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
-                        'patage' => intval($model->patage).' yr/s',
-                        ]
-                    );
-                },
+                            'surgical' => function($url, $model){
+                                return Html::a(Yii::t('app', 'Surgical'),
+                                ['surgical',
+                                'hpercode' =>$model->hpercode,
+                                'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
+                                'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
+                                'patage' => intval($model->patage).' yr/s',
+                                ]
+                            );
+                            },
 
 
 
 
-                    'cf4' => function($url, $model){
-                    return Html::a(Yii::t('app', 'Cf4'),
-                        ['cf4',
-                        'hpercode' =>$model->hpercode,
-                        'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
-                        'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
-                        'patage' => intval($model->patage).' yr/s',
-                        ]
-                    );
-                    },
+                            'cf4' => function($url, $model){
+                            return Html::a(Yii::t('app', 'Cf4'),
+                                ['cf4',
+                                'hpercode' =>$model->hpercode,
+                                'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
+                                'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
+                                'patage' => intval($model->patage).' yr/s',
+                                ]
+                            );
+                            },
 
 
 
 
-                    'newborninformation' => function($url, $model){
-                      return Html::a(Yii::t('app', 'New born Papers'),
-                        ['newborninformation',
-                        'hpercode' =>$model->hpercode,
-                        'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
-                        'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
-                        'patage' => intval($model->patage).' yr/s',
-                        ]
-                    );
-                    },
+                            'newborninformation' => function($url, $model){
+                            return Html::a(Yii::t('app', 'New born Papers'),
+                                ['newborninformation',
+                                'hpercode' =>$model->hpercode,
+                                'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
+                                'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
+                                'patage' => intval($model->patage).' yr/s',
+                                ]
+                                );
+                            },
 
 
-                    
-
-
-
-
-
-          /* end */      ] 
-                 
-
-                                    //['class' => \common\widgets\ActionColumn::class],
+                     ] 
                 ]
-                ]
+                
 
-                    ],
+                
                     
 
-                    /*
-                    ['class' => 'yii\grid\ActionColumn', 'template'=>'{print} <br> {clinical} <br> {laboratory} <br> {otherlaboratory} <br> {radiologyrequest} <br> {tag} <br> {surgical} <br> {cf4} <br> {newborninformation}',
-                    'buttons'=>[
-
-                        'print' => function ($url, $model) {
-                        //return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-print"></span> chart'),
-                        return Html::a(Yii::t('app', 'Chart'),
-                            ['print',
-                                //'hpercode' =>$model->hpercode,
-                                //'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
-                                //'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
-                                //'patage' => intval($model->patage).' yr/s',
-                            ]);
-                        },
-                        
-                        ],
-                        
-                        'contentOptions'=>['style'=>'width: 150px;']
-                        
-                    ],
-                    */
 
                     
 
-                    //'disdate' => $this->disdate,
-                    //'distime' => $this->distime,
-
-                    //'enccode',
-                    //'hpercode',
-                    //'upicode',
-                    //'casenum',
-                    //'patage',
-                    // 'newold',
-                    // 'tacode',
-                    // 'tscode',
-                    // 'admdate',
-                    // 'admtime',
-                    // 'diagcode',
-                    // 'admnotes',
-                    // 'licno',
-                    // 'diagfin',
-                    // 'disnotes',
-                    // 'admmode',
-                    // 'admpreg',
-                    // 'disdate',
-                    // 'distime',
-                    // 'dispcode',
-                    // 'condcode',
-                    // 'licnof',
-                    // 'licncons',
-                    // 'cbcode',
-                    // 'dcspinst',
-                    // 'admstat',
-                    // 'admlock',
-                    // 'datemod',
-                    // 'updsw',
-                    // 'confdl',
-                    // 'admtxt',
-                    // 'admclerk',
-                    // 'licno2',
-                    // 'licno3',
-                    // 'licno4',
-                    // 'licno5',
-                    // 'patagemo',
-                    // 'patagedy',
-                    // 'patagehr',
-                    // 'admphic',
-                    // 'disnotice',
-                    // 'treatment:ntext',
-                    // 'hsepriv',
-                    // 'licno6',
-                    // 'licno7',
-                    // 'licno8',
-                    // 'licno9',
-                    // 'licno10',
-                    // 'itisind',
-                    // 'entryby',
-                    // 'pexpireddate',
-                    // 'acis',
-                    // 'watchid',
-                    // 'lockby',
-                    // 'lockdte',
-                    // 'typadm',
-                    // 'pho_hospital_number:ntext',
-                    
-                    //['class' => \common\widgets\ActionColumn::class],
                 ],
 
             ]); ?>

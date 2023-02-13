@@ -293,19 +293,7 @@ public function actionLaboratory($hpercode)
         return $this->redirect(['index']);
     }
 
-    public function actionPrint()
-    {
-        return "im here";
-        /*
-        $searchModel = new HadmlogSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-        */
-    }
 
 
 
@@ -326,8 +314,8 @@ public function actionLaboratory($hpercode)
 
         throw new NotFoundHttpException('The requested page does not exist.');
     
-
-    protected function findModel($enccode)
+    }
+    protected function findModelHadmlog($enccode)
     {
         if (($model = Hadmlog::findOne($id)) !== null) {
             return $model;
