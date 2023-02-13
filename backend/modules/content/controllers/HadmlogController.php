@@ -8,6 +8,8 @@ use backend\modules\content\models\search\HadmlogSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use kartik\mpdf\Pdf;
+use common\models\Hperson;
 
 /**
  * HadmlogController implements the CRUD actions for Hadmlog model.
@@ -89,6 +91,191 @@ class HadmlogController extends Controller
             'model' => $model,
         ]);
     }
+    public function actionPrint($hpercode)
+    {
+        
+       $model = $this->findModel($hpercode);
+        $content =  $this->renderPartial('_chart', [
+         'model' => $model,
+        ]);
+        
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'cssFile' => 'css/header.css',
+            'content' => $content,
+            'options' => ['title' => 'PHO'],
+        
+        ]);
+        
+        return $pdf->render();
+    }
+
+    public function actionClinical($hpercode)
+    {
+        $model = $this->findModel($hpercode);
+        $content = $this->renderPartial('clinical',[
+        'model' => $model,
+    ]);
+    $pdf = new Pdf([
+        'mode' => Pdf::MODE_CORE,
+        'format' => Pdf::FORMAT_A4,
+        'orientation' => Pdf::ORIENT_PORTRAIT,
+        'destination' => Pdf::DEST_BROWSER,
+        'cssFile' => 'css/header.css',
+        'content' => $content,
+        'options' => ['title' => 'PHO'],
+    
+    ]);
+    return $pdf->render();
+} 
+public function actionLaboratory($hpercode)
+{
+    $model = $this->findModel($hpercode);
+    $content = $this->renderPartial('laboratory',[
+        'model' => $model,
+    ]);
+    $pdf = new Pdf([
+        'mode' => Pdf::MODE_CORE,
+        'format' => Pdf::FORMAT_A4,
+        'orientation' => Pdf::ORIENT_PORTRAIT,
+        'destination' => Pdf::DEST_BROWSER,
+        'cssFile' => 'css/header.css',
+        'content' => $content,
+        'options' => ['title' => 'PHO'],
+    
+    ]);
+    return $pdf->render();
+}
+
+    public function actionOtherlaboratory($hpercode)
+    {
+    $model = $this->findModel($hpercode);
+    $content = $this->renderPartial('otherlaboratory',[
+        'model' => $model,
+    ]);
+    $pdf = new Pdf([
+        'mode' => Pdf::MODE_CORE,
+        'format' => Pdf::FORMAT_A4,
+        'orientation' => Pdf::ORIENT_PORTRAIT,
+        'destination' => Pdf::DEST_BROWSER,
+        'cssFile' => 'css/header.css',
+        'content' => $content,
+        'options' => ['title' => 'PHO'],
+    
+    ]);
+    return $pdf->render();
+}
+
+    public function actionRadiologyrequest($hpercode)
+    {
+        $model = $this->findModel($hpercode);
+        $content = $this->renderPartial('radiologyrequest',[
+            'model' => $model,
+        ]);
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'cssFile' => 'css/header.css',
+            'content' => $content,
+            'options' => ['title' => 'PHO'],
+        
+        ]);
+        return $pdf->render();
+    }
+
+    public function actionTag($hpercode)
+    {
+        $model = $this->findModel($hpercode);
+        $content = $this->renderPartial('tag',[
+            'model' => $model,
+    ]);
+    $pdf = new Pdf([
+        'mode' => Pdf::MODE_CORE,
+        'format' => Pdf::FORMAT_A4,
+        'orientation' => Pdf::ORIENT_PORTRAIT,
+        'destination' => Pdf::DEST_BROWSER,
+        'cssFile' => 'css/header.css',
+        'content' => $content,
+        'options' => ['title' => 'PHO'],
+    
+    ]);
+    return $pdf->render();
+
+
+
+    }
+
+
+
+
+
+
+
+
+    public function actionSurgical($hpercode)
+
+    {
+        $model = $this->findModel($hpercode);
+        $content =$this->renderPartial('surgical',[
+        'model' => $model,
+        ]);
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'cssFile' => 'css/header.css',
+            'content' => $content,
+            'options' => ['title' => 'PHO'],
+        
+        ]);
+        return $pdf->render();
+    }
+
+        public function actionCf4($hpercode)
+
+        {
+            $model = $this->findModel($hpercode);
+            $content =$this->renderPartial('cf4',[
+                'model' => $model,
+            ]);
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_CORE,
+                'format' => Pdf::FORMAT_A4,
+                'orientation' => Pdf::ORIENT_PORTRAIT,
+                'destination' => Pdf::DEST_BROWSER,
+                'cssFile' => 'css/header.css',
+                'content' => $content,
+                'options' => ['title' => 'PHO'],
+            
+            ]);
+            return $pdf->render();
+        }
+        public function actionNewborninformation($hpercode)
+
+        {
+            $model = $this->findModel($hpercode);
+            $content =$this->renderPartial('newborninformation',[
+                'model' => $model,
+            ]);
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_CORE,
+                'format' => Pdf::FORMAT_A4,
+                'orientation' => Pdf::ORIENT_PORTRAIT,
+                'destination' => Pdf::DEST_BROWSER,
+                'cssFile' => 'css/header.css',
+                'content' => $content,
+                'options' => ['title' => 'PHO'],
+            
+            ]);
+            return $pdf->render();
+        }
+
 
     /**
      * Deletes an existing Hadmlog model.
@@ -110,11 +297,14 @@ class HadmlogController extends Controller
      * @return Hadmlog the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($enccode)
+    protected function findModel($hpercode)
+
     {
-        if (($model = Hadmlog::findOne($id)) !== null) {
+        if (($model = Hperson::find()->where(['hpercode'=>$hpercode])->one()) !== null) {
             return $model;
         }
+
         throw new NotFoundHttpException('The requested page does not exist.');
+    
     }
 }

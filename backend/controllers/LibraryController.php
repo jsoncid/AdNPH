@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
+use backend\models\chart;
 
 /**
  * LibraryController implements the CRUD actions for Library model.
@@ -106,29 +107,30 @@ class LibraryController extends Controller
 
     public function actionPdf()
     {
-        $searchModel = new LibrarySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $html = $this ->renderPartial('pdf_view', ['dataProvider' =>$dataProvider]);
-        $html = $this ->renderPartial('clinical', ['dataProvider' =>$dataProvider]);
-        $mpdf = new \Mpdf\Mpdf();
-        $mpdf ->showImageErrors = true;
-        $mpdf ->SetDisplayMode('fullpage','two');
-        #$mpdf ->list_indent_first_lavel = 0;
-        $mpdf ->writeHTML($html);
-        $mpdf ->Output();
-        $mpdf = new pdf([
-            'format' => Pdf::FORMAT_LEGAL,
-
+    
+        $html = $this ->renderPartial('chart');
+        $pdf = new \Mpdf\Mpdf();
+        $pdf ->writeHTML($html);
+        $pdf ->Output();
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE,
+            'format' => Pdf::FORMAT_Legal,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            
+            'options' => ['title' => 'PHO'],
             'methods' => [
-                'SetHeader' => ['ddawdadawd'],
-                'SetFooter' => ['{PageNo}']
-            ]
-            ]
+                'SetHeader' => ['   PROVINCIAL HEALTH OFFICE <br>
+                                    AGUSAN DEL NORTE PROVINCIAL HOSPITAL <br> '
+                                  
+                
+                                ],
+           ]
+        ]
         );
        return $mpdf->render();
     }
 
-       
 
     /**
      * Finds the Library model based on its primary key value.

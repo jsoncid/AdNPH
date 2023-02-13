@@ -1,0 +1,39 @@
+.timesdate{
+    font-family:"Courier", monospace;
+     font-size: 10px;
+}
+.footer{
+    position: relative;
+    display: inline-block;
+    font-family:"Arial Narrow", Arial, sans-serif;
+    font-size: 10px;
+}
+.container{
+    position: relative;
+    display: flex;
+
+}
+.header{
+    font-family:"Arial Narrow", Arial, sans-serif;
+    font-size: 10px;
+    position: absolute;
+    text-align: center;
+    margin-top: -4.6rem;
+}
+.image1, .image3{
+    margin-bottom: -4.4rem;
+    margin-left: 12rem;
+    position: relative;
+    text-align: left;
+}
+.image2, .image4{
+    margin-top: -5.6rem;
+    margin-right: 12rem;
+    position: relative;
+    text-align: right;
+}
+
+td, th{
+    font-family:"Calibri", sans-serif;
+    font-size: 11px;
+}

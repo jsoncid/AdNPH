@@ -1,4 +1,7 @@
 <?php
+
+
+
 $config = [
     'homeUrl' => Yii::getAlias('@backendUrl'),
     'controllerNamespace' => 'backend\controllers',
@@ -19,6 +22,9 @@ $config = [
             'as afterLogin' => common\behaviors\LoginTimestampBehavior::class,
         ],
     ],
+
+    
+
     'modules' => [
 
 
