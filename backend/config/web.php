@@ -47,6 +47,12 @@ $config = [
             'class' => backend\modules\rbac\Module::class,
             'defaultRoute' => 'rbac-auth-item/index',
         ],
+        'records' => [
+            'class' => 'backend\modules\records\records',
+        ],
+        'transmittal' => [
+            'class' => 'backend\modules\transmittal\transmittal',
+        ],
 
 
     ],
