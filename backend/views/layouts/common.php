@@ -242,10 +242,33 @@ $logEntries[] = [
                             //'badge' => TimelineEvent::find()->today()->count(),
                             //'badgeBgClass' => 'badge-success',
                         ],
+
+                        [
+                            'label' => Yii::t('backend', 'Chart Transmittal'),
+                            'url' => '#',
+                            'icon' => FAS::icon('user-shield', ['class' => ['nav-icon']]),
+                            'options' => ['class' => 'nav-item has-treeview'],
+                            //'active' => (Yii::$app->controller->module->id == 'rbac'),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Foward Chart'),
+                                    'icon' => FAS::icon('circle', ['class' => ['nav-icon']]),
+                                    'url' => ['/transmittal'],
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Items'),
+                                    'url' => ['/rbac/rbac-auth-item/index'],
+                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                ],
+                                
+                            ],
+                        ],
+
+
                         [
                             'label' => Yii::t('backend', 'Records'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
-                            'url' => ['/content/page/index'],
+                            'url' => ['/records'],
                             //'url' => ['/timeline-event/index'],
                             //'badge' => TimelineEvent::find()->today()->count(),
                             //'badgeBgClass' => 'badge-success',
