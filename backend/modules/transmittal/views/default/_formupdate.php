@@ -1,15 +1,14 @@
 <?php
 
-use rmrevin\yii\fontawesome\FAS;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use backend\modules\rbac\models\RbacAuthItem;
 use yii\bootstrap4\Modal;
+use yii\bootstrap4\ActiveField;
 use yii\helpers\Url;
 use common\models\Hadmlog;
-
 
 /* @var $this yii\web\View */
 /* @var $model common\models\PhoTransmittal */
@@ -19,17 +18,10 @@ use common\models\Hadmlog;
 <div class="pho-transmittal-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <?php 
-        /*
-        echo Html::a(FAS::icon('user-plus').' '.Yii::t('backend', 'Add {modelClass}', [
-            'modelClass' => 'Chart',
-        ]), ['createtemp'], ['class' => 'btn btn-success','id'=>'modalButtonAddChart']) 
-        */
-    ?>
     
-    <?php echo Html::button('Add Chart', ['value' => Url::to('createtemp'),'class'=>'btn btn-success','id'=>'modalButtonAddChart']) ?>
+    
+    <?php echo Html::button('Add Chart', ['value' => Url::to('../pho-transmittal-details/create?tid='.$model->tid),'class'=>'btn btn-success','id'=>'modalButtonAddChart']) ?>
     <?php 
-        
         Modal::begin([
                         'title'=>'Add Chart',
                         'id' => 'modalAddChart',
@@ -39,17 +31,6 @@ use common\models\Hadmlog;
         echo "<div id = 'modalContentAddChart'></div>";
         
         Modal::end()
-        
-    /*
-    Modal::begin([
-    'title' => 'My Modal',
-    'toggleButton' => ['label' => 'Popover inside Modal', 'class' => 'btn btn-primary']
-    ]);
-    echo '<p>Some custom content above in my modal dialog. Popover can be clicked below to see details:</p>';
-
-    echo '<hr><p>Some more custom content below in my modal dialog.</p>';
-    Modal::end();
-    */
     ?>
     
     <?php echo GridView::widget([
@@ -102,10 +83,11 @@ use common\models\Hadmlog;
             
             
 
-            ['class' => 'yii\grid\ActionColumn','template'=>'{deletetemp}',
+            ['class' => 'yii\grid\ActionColumn','template'=>'{deletedetails}',
                 
                 'buttons'=>[
-                    'deletetemp' => function ($url, $model) {
+                    'deletedetails' => function ($url, $model) {
+                    $url .= '&tid=' . $model->tid;
                     return Html::a('<span class="fa fa-trash"></span>', $url, [
                         'title' => Yii::t('yii', 'Delete'),
                     ]);

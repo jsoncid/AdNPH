@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'buttons'=>[
                             
                                     'printtransmittal' => function ($url, $model) {
-                                            return Html::a('<span class="glyphicon glyphicon-print"></span>', $url, [
+                                            return Html::a('<span class="fa fa-print"></span>', $url, [
                                                 'title' => Yii::t('yii', 'Print'),
                                             ]);
                                     },
@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'update' => function ($url, $model) {
                                         if($model->is_received == 0)
                                         {
-                                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                            return Html::a('<span class="fa fa-edit"></span>', $url, [
                                                 'title' => Yii::t('yii', 'Update'),
                                             ]);
                                         }
@@ -97,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'delete' => function ($url, $model) {
                                     if($model->is_received == 0)
                                     {
-                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                        return Html::a('<span class="fa fa-trash"></span>', $url, [
                                             'title' => Yii::t('yii', 'Delete'),
                                         ]);
                                     }
