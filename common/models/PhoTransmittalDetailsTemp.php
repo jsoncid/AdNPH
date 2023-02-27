@@ -19,6 +19,9 @@ class PhoTransmittalDetailsTemp extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    
+    public $disdate;
+    
     public static function tableName()
     {
         return 'pho_transmittal_details_temp';

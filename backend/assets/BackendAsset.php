@@ -19,8 +19,8 @@ class BackendAsset extends AssetBundle
     /**
      * @var string
      */
+    //public $sourcePath = '@backend/web/bundle';
     public $sourcePath = '@backend/web/bundle';
-
     /**
      * @var array
      */
@@ -31,7 +31,8 @@ class BackendAsset extends AssetBundle
      * @var array
      */
     public $js = [
-        'app.js'
+        'app.js',
+        'modal.js',
     ];
 
     public $publishOptions = [

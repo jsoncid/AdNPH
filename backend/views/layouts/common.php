@@ -225,6 +225,7 @@ $logEntries[] = [
                             //'badgeBgClass' => 'badge-success',
                         ],
                         */
+                        /*
                         [
                             'label' => Yii::t('backend', 'Hospital Wards'),
                             'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
@@ -233,10 +234,10 @@ $logEntries[] = [
                             //'badge' => TimelineEvent::find()->today()->count(),
                             //'badgeBgClass' => 'badge-success',
                         ],
-
+                        */
                         [
                             'label' => Yii::t('backend', 'Admission'),
-                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'icon' => FAS::icon('user', ['class' => ['nav-icon']]),
                             'url' => ['/content/hadmlog'],
                             //'url' => ['/timeline-event/index'],
                             //'badge' => TimelineEvent::find()->today()->count(),
@@ -246,33 +247,47 @@ $logEntries[] = [
                         [
                             'label' => Yii::t('backend', 'Chart Transmittal'),
                             'url' => '#',
-                            'icon' => FAS::icon('user-shield', ['class' => ['nav-icon']]),
+                            'icon' => FAS::icon('archive', ['class' => ['nav-icon']]),
                             'options' => ['class' => 'nav-item has-treeview'],
                             //'active' => (Yii::$app->controller->module->id == 'rbac'),
                             'items' => [
                                 [
-                                    'label' => Yii::t('backend', 'Foward Chart'),
+                                    'label' => Yii::t('backend', 'Forward Chart'),
                                     'icon' => FAS::icon('circle', ['class' => ['nav-icon']]),
-                                    'url' => ['/transmittal'],
+                                    'url' => ['/transmittal/default/index'],
                                 ],
                                 [
-                                    'label' => Yii::t('backend', 'Items'),
-                                    'url' => ['/rbac/rbac-auth-item/index'],
-                                    'icon' => FAR::icon('circle', ['class' => ['nav-icon']]),
+                                    'label' => Yii::t('backend', 'Receive Chart'),
+                                    'icon' => FAS::icon('circle', ['class' => ['nav-icon']]),
+                                    'url' => ['/transmittal/default/indexreceived'],
+                                ],
+                                
+                            ],
+                        ],
+                        
+                        
+                        [
+                            'label' => Yii::t('backend', 'Records'),
+                            'url' => '#',
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'options' => ['class' => 'nav-item has-treeview'],
+                            //'active' => (Yii::$app->controller->module->id == 'rbac'),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Records Filling'),
+                                    'icon' => FAS::icon('folder', ['class' => ['nav-icon']]),
+                                    'url' => ['/records'],
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Patient`s Chart'),
+                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                    'url' => ['/transmittal/default/indexreceived'],
                                 ],
                                 
                             ],
                         ],
 
 
-                        [
-                            'label' => Yii::t('backend', 'Records'),
-                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
-                            'url' => ['/records'],
-                            //'url' => ['/timeline-event/index'],
-                            //'badge' => TimelineEvent::find()->today()->count(),
-                            //'badgeBgClass' => 'badge-success',
-                        ],
 
 
 

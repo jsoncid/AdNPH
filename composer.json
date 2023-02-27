@@ -60,7 +60,8 @@
     "kartik-v/yii2-widgets": "^3.4",
     "kartik-v/yii2-mpdf": "dev-master",
     "kartik-v/yii2-sortable": "dev-master",
-    "kartik-v/yii2-dialog": "dev-master"
+    "kartik-v/yii2-dialog": "dev-master",
+    "kartik-v/yii2-popover-x": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-gii": "^2.0.0",
