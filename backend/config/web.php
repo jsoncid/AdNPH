@@ -53,6 +53,9 @@ $config = [
         'transmittal' => [
             'class' => 'backend\modules\transmittal\transmittal',
         ],
+        'laboratoryrequestprinting' => [
+            'class' => 'backend\modules\laboratoryrequestprinting\laboratoryrequestprinting',
+        ],
 
 
     ],
