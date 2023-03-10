@@ -269,7 +269,7 @@ $logEntries[] = [
                         [
                             'label' => Yii::t('backend', 'Records'),
                             'url' => '#',
-                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'icon' => FAS::icon('layer-group', ['class' => ['nav-icon']]),
                             'options' => ['class' => 'nav-item has-treeview'],
                             //'active' => (Yii::$app->controller->module->id == 'rbac'),
                             'items' => [
@@ -283,6 +283,24 @@ $logEntries[] = [
                                     'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
                                     'url' => ['/transmittal/default/indexreceived'],
                                 ],
+                                
+                            ],
+                        ],
+                        
+                        
+                        [
+                            'label' => Yii::t('backend', 'Laboratory'),
+                            'url' => '#',
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'options' => ['class' => 'nav-item has-treeview'],
+                            //'active' => (Yii::$app->controller->module->id == 'rbac'),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Laboratory Request'),
+                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                    'url' => ['/laboratoryrequestprinting'],
+                                ],
+                                
                                 
                             ],
                         ],
