@@ -10,13 +10,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\Hprocm;
 use kartik\mpdf\Pdf;
-use common\models\Hpatroom;
-use common\models\Hperson;
-use common\models\Henctr;
-use common\models\Hroom;
-use common\models\Htelep;
-use common\models\Hward;
-use common\controllers\PatiendetailsController;
 
 /**
  * Default controller for the `laboratoryrequestprinting` module
@@ -61,7 +54,35 @@ class DefaultController extends Controller
         ]);
     }
     
-
+    /**
+     * Displays a single Hdocord model.
+     * @param string $docointkey Docointkey
+     * @return mixed
+     */
+    public function actionView($docointkey)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($docointkey),
+        ]);
+    }
+    
+    /**
+     * Creates a new Hdocord model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Hdocord();
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'docointkey' => $model->docointkey]);
+        }
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+    
     /**
      * Updates an existing Hdocord model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -80,32 +101,17 @@ class DefaultController extends Controller
         ]);
     }
     
-
-    public function actionPatientdetails($hperid,$encid,$docointkey)
-    {   
-        if (($model = Henctr::findOne($encid)) !== null) {
-            $modelhdocord = Hdocord::findOne($docointkey);
-            
-
-                    $contact = PatiendetailsController::Contact($hperid);
-                    $age = PatiendetailsController::Age($encid);
-                    $room = PatiendetailsController::Room($encid);
-                    
-                    
-            return $this->renderAjax('patientdetails', [
-                'model' => $model,
-                'modelhdocord' => $modelhdocord,
-                'contact' => $contact,
-                'age' => $age,
-                'room' => $room
-            ]);
-            
-        }
-        else 
-        {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+    /**
+     * Deletes an existing Hdocord model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $docointkey Docointkey
+     * @return mixed
+     */
+    public function actionDelete($docointkey)
+    {
+        $this->findModel($docointkey)->delete();
         
+        return $this->redirect(['index']);
     }
     
     
@@ -126,8 +132,8 @@ class DefaultController extends Controller
          // any mpdf options you wish to set
          ],
          'methods' => [
-         'SetTitle' => 'Laboratory Request List',
-         'SetSubject' => 'Generating PDF file for Laboratory Request List',
+         'SetTitle' => 'Privacy Policy - Krajee.com',
+         'SetSubject' => 'Generating PDF files via yii2-mpdf extension has never been easy',
          'SetHeader' => ['Laboratory Request List||Generated On: ' . date("r")],
          'SetFooter' => ['|Page {PAGENO}|'],
          'SetAuthor' => 'AdNPH',
@@ -135,7 +141,8 @@ class DefaultController extends Controller
          ]
          ]);
          return $pdf->render();
-
+         
+        
     }
     
     

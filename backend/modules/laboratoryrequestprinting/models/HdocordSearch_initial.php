@@ -42,38 +42,23 @@ class HdocordSearch extends Hdocord
      */
     public function search($params)
     {
-        
+        //$query = Hdocord::find();
         $query = Hdocord::find()
             ->innerJoin('hprocm','hprocm.proccode = hdocord.proccode AND hprocm.costcenter = "LABOR"')
-            ->innerJoin('hperson','hperson.hpercode = hdocord.hpercode')
-            ->innerJoin('henctr','henctr.enccode = hdocord.enccode')
-            ->innerJoin('hpatroom','hpatroom.enccode = henctr.enccode && hpatroom.patrmstat = "A"')
-            //->innerJoin('hroom','hroom.wardcode = hpatroom.wardcode && hpatroom.patrmstat = "A"')
             ->orderBy([
-                'hpatroom.wardcode' => SORT_ASC,
-                'hperson.patlast' => SORT_ASC,
-                'hdocord.dodate' => SORT_ASC,
+            'dodate' => SORT_DESC,
+            //'item_no'=>SORT_ASC
         ]);
-        $query->where('pcchrgcod IS NULL');
-        $query->orderBy('henctr.enccode');
-        
-        
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => false,
         ]);
-        
-        
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
         
-        // estatus (examination process) = 'P' for true
-        $query->andFilterWhere([ 'estatus' => 'P']);
-        
-
         $query->andFilterWhere([ 'hprocm.proccode' => $this->laboratorytest]);
 
         $query->andFilterWhere([

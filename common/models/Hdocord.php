@@ -91,6 +91,7 @@ class Hdocord extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public $laboratorytest;
     public static function tableName()
     {
         return 'hdocord';
@@ -156,7 +157,7 @@ class Hdocord extends \yii\db\ActiveRecord
             'orcode' => 'Orcode',
             'hpercode' => 'Health Record No.',
             'upicode' => 'Upicode',
-            'dopriority' => 'Dopriority',
+            'dopriority' => 'Priority',
             'dodtepost' => 'Dodtepost',
             'dotmepost' => 'Dotmepost',
             'dostat' => 'Dostat',
@@ -307,4 +308,5 @@ class Hdocord extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Hpersonal::class, ['employeeid' => 'verby']);
     }
+    
 }

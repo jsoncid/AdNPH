@@ -349,6 +349,11 @@ class Hperson extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Haddr::className(), ['hpercode' => 'hpercode']);
     }
+    
+    public function getHaddr()
+    {
+        return $this->hasOne(Haddr::className(), ['hpercode' => 'hpercode'])->andOnCondition(['addstat' => 'A']);
+    }
 
     /**
      * Gets query for [[Hadmcons]].
@@ -1128,6 +1133,11 @@ class Hperson extends \yii\db\ActiveRecord
     public function getHteleps()
     {
         return $this->hasMany(Htelep::className(), ['hpercode' => 'hpercode']);
+    }
+    
+    public function getHtelep()
+    {
+        return $this->hasOne(Htelep::className(), ['hpercode' => 'hpercode'])->andOnCondition(['ptlstat' => 'A']);
     }
 
     /**

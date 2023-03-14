@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34f3757e5d6f0772d6664a3aac3f5d37",
+    "content-hash": "8ca530a9952ab7f183f3126c6827ce67",
     "packages": [
         {
             "name": "alexantr/yii2-elfinder",
@@ -2412,7 +2412,7 @@
         },
         {
             "name": "kartik-v/yii2-widget-select2",
-            "version": "v2.2.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
@@ -2428,6 +2428,7 @@
                 "kartik-v/yii2-krajee-base": ">=3.0.4",
                 "select2/select2": ">=4.0"
             },
+            "default-branch": true,
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
@@ -9884,7 +9885,8 @@
         "kartik-v/yii2-mpdf": 20,
         "kartik-v/yii2-sortable": 20,
         "kartik-v/yii2-dialog": 20,
-        "kartik-v/yii2-popover-x": 20
+        "kartik-v/yii2-popover-x": 20,
+        "kartik-v/yii2-widget-select2": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
@@ -9894,5 +9896,8 @@
         "ext-gd": "*"
     },
     "platform-dev": [],
+    "platform-overrides": {
+        "php": "5.5"
+    },
     "plugin-api-version": "2.3.0"
 }
