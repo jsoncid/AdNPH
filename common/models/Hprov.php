@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Hregion;
 
 /**
  * This is the model class for table "hprov".
