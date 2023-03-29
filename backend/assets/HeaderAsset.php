@@ -31,7 +31,8 @@ class HeaderAsset extends AssetBundle
      * @var array
      */
     public $js = [
-        'app.js'
+        'app.js',
+        'js/main.js'
     ];
 
     public $publishOptions = [

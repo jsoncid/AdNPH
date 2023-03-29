@@ -301,11 +301,35 @@ $logEntries[] = [
                                     'url' => ['/laboratoryrequestprinting'],
                                 ],
                                 
-                                
+                                [
+                                    'label' => Yii::t('backend', 'Laboratory Result'),
+                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                    'url' => ['/labresult'],
+                                ],
+                                [
+                                    'label' => Yii::t('backend', 'Laboratory Logs'),
+                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                    'url' => ['/labresultlogs'],
+                                ],
                             ],
                         ],
 
-
+                        [
+                            'label' => Yii::t('backend', 'Radiology'),
+                            'url' => '#',
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'options' => ['class' => 'nav-item has-treeview'],
+                            //'active' => (Yii::$app->controller->module->id == 'rbac'),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Radiology Result'),
+                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                    'url' => ['/radresult'],
+                                ],
+                                
+                                
+                            ],
+                        ],
 
 
 

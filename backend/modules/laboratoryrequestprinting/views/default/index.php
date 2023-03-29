@@ -10,7 +10,7 @@ use common\models\Hprocm;
  * @var yii\data\ActiveDataProvider $dataProvider
  */
 
-$this->title = 'Laboratory Rquests';
+$this->title = 'Laboratory Requests';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="hdocord-index">
