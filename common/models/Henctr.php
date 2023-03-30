@@ -686,10 +686,17 @@ class Henctr extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    
     public function getHpatrooms()
     {
         return $this->hasMany(Hpatroom::className(), ['enccode' => 'enccode']);
     }
+    
+    public function getHpatroom()
+    {
+        return $this->hasOne(Hpatroom::className(), ['enccode' => 'enccode'])->andOnCondition(['patrmstat' => 'A']);
+    }
+    
 
     /**
      * Gets query for [[Hpaychks]].

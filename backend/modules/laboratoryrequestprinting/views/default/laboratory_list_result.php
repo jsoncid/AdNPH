@@ -18,21 +18,10 @@ use common\controllers\HproviderController;
  * @var yii\data\ActiveDataProvider $dataProvider
  */
 
-$this->title = 'Laboratory Requests';
+$this->title = 'Laboratory Rquests';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?php 
-
-$this->registerJs("$(function() {
-   $('.popupModal').click(function(e) {
-     e.preventDefault();
-     $('#modal').modal('show')
-         .find('.modal-body')
-         .load($(this).attr('href'));
-   });
-});");
-?>
 <div class="hdocord-index">
     <div class="card">
         <div class="card-header">
@@ -40,27 +29,7 @@ $this->registerJs("$(function() {
         </div>
 
         <div class="card-body p-0">
-            <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
-    		<?php
-        		
-        		Modal::begin([
-        		    'title'=>'Patient Details',
-        		    'id' => 'modalPatDet',
-        		    'size'=>'modal-lg'
-        		]);
-        		
-        		echo "<div id = 'modalContentPatDet'></div>";
-        		
-        		Modal::end()
-        		
-        		
-            ?>
-    
-    		<?php
-    		      Modal::begin(['id' =>'modal','title'=>'Patient Details','size'=>'modal-lg']);
-    		      
-                Modal::end();
-            ?>
+           
     
             <?php echo GridView::widget([
                 'layout' => "{items}\n{pager}",
@@ -77,7 +46,7 @@ $this->registerJs("$(function() {
                     [
                         'header'=>'Health Record No.',
                         'value' => function ($model) {
-                        return Html::a($model->hpercode, ['patientdetails','hperid'=>$model->hpercode,'encid'=>$model->enccode,'docointkey'=>$model->docointkey], ['class' => 'popupModal']);
+                                    return $model->hpercode;
                         },
                     'format' => 'raw'
                     ],
@@ -94,7 +63,6 @@ $this->registerJs("$(function() {
                     
                    
                     'dodate',
-                    //'pcchrgcod',
                     [
                         'label'=>'Room',
                         'format'=>'text',
@@ -135,9 +103,6 @@ $this->registerJs("$(function() {
                  
                     
                     
-                    
-                    
-                    //['class' => \common\widgets\ActionColumn::class],
                 ],
             ]); ?>
     
@@ -147,18 +112,7 @@ $this->registerJs("$(function() {
         </div>
     </div>
     
-    <?php 
-    $_SESSION['labreqlistparam'] = Yii::$app->request->queryParams;
-    echo Html::a('<i class="fa far fa-hand-point-up"></i> Print Result', ['/laboratoryrequestprinting/default/labreqlist'], [
-            'class'=>'btn btn-danger',
-            'target'=>'_blank',
-            'data-toggle'=>'tooltip',
-            //'title'=>'Will open the generated PDF file in a new window'
-        ]);
-    
 
-    ?>
-    
     
 
 </div>
