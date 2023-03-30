@@ -4,3 +4,4 @@ return [
     'enablePrettyUrl' => true,
     'showScriptName' => false,
 ];
+
