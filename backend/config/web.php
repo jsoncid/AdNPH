@@ -138,6 +138,7 @@ $config = [
             ],
         ],
     ],
+  ],
 ];
 
 if (YII_ENV_DEV) {
