@@ -237,7 +237,7 @@ class Hperson extends \yii\db\ActiveRecord
         return [
             'hpatkey' => 'Hpatkey',
             'hfhudcode' => 'Hfhudcode',
-            'hpercode' => 'Hpercode',
+            'hpercode' => 'Health Record No.',
             'hpatcode' => 'Hpatcode',
             'upicode' => 'Upicode',
             'hhcode' => 'Hhcode',
@@ -246,11 +246,11 @@ class Hperson extends \yii\db\ActiveRecord
             'hspocode' => 'Hspocode',
             'hspoupi' => 'Hspoupi',
             'upistcode' => 'Upistcode',
-            'patlast' => 'Patlast',
-            'patfirst' => 'Patfirst',
-            'patmiddle' => 'Patmiddle',
-            'patsuffix' => 'Patsuffix',
-            'patprefix' => 'Patprefix',
+            'patlast' => 'Last Name',
+            'patfirst' => 'First Name',
+            'patmiddle' => 'Middle Name',
+            'patsuffix' => 'Suffix',
+            'patprefix' => 'Prefix',
             'patdegree' => 'Patdegree',
             'patalias' => 'Patalias',
             'patmaidnm' => 'Patmaidnm',
@@ -1249,4 +1249,6 @@ class Hperson extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Hwrdtrn::className(), ['hpercode' => 'hpercode']);
     }
+    
+    
 }

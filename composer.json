@@ -62,10 +62,14 @@
     "kartik-v/yii2-sortable": "dev-master",
     "kartik-v/yii2-dialog": "dev-master",
     "kartik-v/yii2-popover-x": "dev-master",
-    "yii2assets/yii2-pdfjs": ">=1.0",
+
+    "kartik-v/yii2-widget-select2": "dev-master",
+    "yii2assets/yii2-pdfjs": ">=1.0"
+
     "wbraganca/yii2-dynamicform": "*",
     "ramsey/uuid": "^4.7",
     "kartik-v/yii2-widget-select2": "dev-master"
+
   },
   "require-dev": {
     "yiisoft/yii2-gii": "^2.0.0",

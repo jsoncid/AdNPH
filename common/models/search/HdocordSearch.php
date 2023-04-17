@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\laboratoryrequestprinting\models;
+namespace common\models\search;
 
 use Yii;
 use yii\base\Model;
@@ -44,18 +44,30 @@ class HdocordSearch extends Hdocord
     {
         
         $query = Hdocord::find()
-            ->innerJoin('hprocm','hprocm.proccode = hdocord.proccode AND hprocm.costcenter = "LABOR"')
+            //->innerJoin('hprocm','hprocm.proccode = hdocord.proccode AND hprocm.costcenter = "LABOR"')
             ->innerJoin('hperson','hperson.hpercode = hdocord.hpercode')
             ->innerJoin('henctr','henctr.enccode = hdocord.enccode')
             ->innerJoin('hpatroom','hpatroom.enccode = henctr.enccode && hpatroom.patrmstat = "A"')
+            ->innerJoin('hward','hward.wardcode = hpatroom.wardcode')
+            ->innerJoin('hroom','hroom.wardcode = hward.wardcode')
+            //->innerJoin('hbed','hbed.rmintkey = hroom.rmintkey')
             //->innerJoin('hroom','hroom.wardcode = hpatroom.wardcode && hpatroom.patrmstat = "A"')
+            /*
             ->orderBy([
-                'hpatroom.wardcode' => SORT_ASC,
+                'hward.wardname' => SORT_ASC,
+                'hroom.rmname' => SORT_ASC,
+                'hbed.bdname' => SORT_ASC,
                 'hperson.patlast' => SORT_ASC,
                 'hdocord.dodate' => SORT_ASC,
-        ]);
+            ]);
+            */
+            ->orderBy([
+                'hward.wardname' => SORT_ASC,
+                'hroom.rmname' => SORT_ASC,
+                //'hbed.bdname' => SORT_ASC,
+                'hperson.patlast' => SORT_ASC,
+            ]);
         $query->where('pcchrgcod IS NULL');
-        $query->orderBy('henctr.enccode');
         
         
 

@@ -1,23 +1,23 @@
 <?php
 
-namespace backend\modules\laboratoryrequestprinting\controllers;
+namespace backend\modules\radiologyrequestprinting\controllers;
 
 use yii\web\Controller;
 use Yii;
 use common\models\Hdocord;
-use common\models\Henctr;
 use common\models\search\HdocordSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
+use common\models\Henctr;
 use common\controllers\PatiendetailsController;
 
 /**
- * Default controller for the `laboratoryrequestprinting` module
+ * Default controller for the `radiologyrequestprinting` module
  */
 class DefaultController extends Controller
 {
-    /**
+     /**
      * Renders the index view for the module
      * @return string
      */
@@ -48,7 +48,7 @@ class DefaultController extends Controller
     {
         $searchModel = new HdocordSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['orcode'=>'LABOR']); 
+        $dataProvider->query->andFilterWhere(['orcode'=>'XRAY0']);
         
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -57,7 +57,23 @@ class DefaultController extends Controller
     }
     
 
-
+    /**
+     * Updates an existing Hdocord model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $docointkey Docointkey
+     * @return mixed
+     */
+    public function actionUpdate($docointkey)
+    {
+        $model = $this->findModel($docointkey);
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'docointkey' => $model->docointkey]);
+        }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
     
 
     public function actionPatientdetails($hperid,$encid,$docointkey)
@@ -88,27 +104,28 @@ class DefaultController extends Controller
     }
     
     
-    public function actionLabreqlist() 
+    public function actionRadreqlist() 
     {
 
         
         $searchModel = new HdocordSearch();
+        
         $dataProvider = $searchModel->search($_SESSION['labreqlistparam']);
-        $dataProvider->query->andFilterWhere(['orcode'=>'LABOR']);
+        $dataProvider->query->andFilterWhere(['orcode'=>'XRAY0']);
 
         
          Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
          $pdf = new Pdf([
          'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
          'destination' => Pdf::DEST_BROWSER,
-             'content' => $this->renderPartial('laboratory_list_result',['searchModel' => $searchModel,'dataProvider' => $dataProvider]),
+             'content' => $this->renderPartial('radiology_list_result',['searchModel' => $searchModel,'dataProvider' => $dataProvider]),
          'options' => [
          // any mpdf options you wish to set
          ],
          'methods' => [
-         'SetTitle' => 'Laboratory Request List',
-         'SetSubject' => 'Generating PDF file for Laboratory Request List',
-         'SetHeader' => ['Laboratory Request List||Generated On: ' . date("r")],
+         'SetTitle' => 'Radiology Request List',
+         'SetSubject' => 'Generating PDF file for Radiology Request List',
+         'SetHeader' => ['Radiology Request List||Generated On: ' . date("r")],
          'SetFooter' => ['|Page {PAGENO}|'],
          'SetAuthor' => 'AdNPH',
          'SetCreator' => 'AdNPH',
@@ -134,6 +151,4 @@ class DefaultController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
     
-    
-
 }

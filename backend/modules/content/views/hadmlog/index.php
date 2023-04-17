@@ -10,6 +10,8 @@ use common\models\Hcity;
 use common\models\Hpatroom;
 use common\models\Hprov;
 use common\models\Htelep;
+use common\controllers\PatiendetailsController;
+use common\controllers\ValidateController;
 
 /**
  * @var yii\web\View $this
@@ -20,6 +22,18 @@ use common\models\Htelep;
 $this->title = 'Admission Logs';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
+<?php if (Yii::$app->session->hasFlash('error')): ?>
+    <div class="alert alert-danger alert-dismissable">
+         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+         <h4>Error</h4>
+         <?= Yii::$app->session->getFlash('error') ?>
+         <?php Yii::$app->session->remove('error');?>
+    </div>
+<?php endif; ?>
+
+
 <div class="hadmlog-index">
     <div class="card">
 
@@ -39,18 +53,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    
+                    /*
                     [
                         'label'=>'Department',
-                        
                         'format'=>'text',
                         'value' => function($model)
-                        {
-                            
+                        {          
                             $modeldepartment = Hpatroom::find()
                             ->where(['enccode' =>  $model->enccode])
-                            ->one();
-                            
+                            ->one();                
                             if($modeldepartment->wardcode == 'OPD')
                             {
                                 return 'OPD';
@@ -84,14 +95,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             
                     },
                     ],
-
+                    */
                     [
                         'label'=>'Patient Name',
                         
                         'format'=>'text',
                         'value' => function($model)
                         {
-                            return  $model->hpercode0->patlast.' '.$model->hpercode0->patsuffix.', '.$model->hpercode0->patfirst.' '.$model->hpercode0->patmiddle;
+                            return  PatiendetailsController::Fullname($model->hpercode);
                         },
                     ],
                     
@@ -105,45 +116,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             return  $model->hpercode0->patsex;
                         },
                     ],
-                  
+                    /*
                     [
                         'label'=>'Address',
                         
                         'format'=>'text',
                         'value' => function($model)
                         {
-
-                            $modeladdr = Haddr::find()
-                            ->where(['hpercode' =>  $model->hpercode])
-                            ->one();
-                            
-                            
-                            
-                            $modelbrg = Hbrgy::find()
-                            ->where(['bgycode' =>  $modeladdr->brg])
-                            ->one();
-                            
-                            $modelcitymun = Hcity::find()
-                            ->where(['ctycode' =>  $modeladdr->ctycode])
-                            ->one();
-                            
-                            $modelprov = Hprov::find()
-                            ->where(['provcode' =>  $modeladdr->provcode])
-                            ->one();
-                            
-                            if($modelbrg != NULL)
-                            {
-                                return $modeladdr->patstr.', '.$modelbrg->bgyname.', '.$modelcitymun->ctyname.', '.$modelprov->provname;
-                            }
-                            
-                            else 
-                            {
-                                return $modeladdr->patstr.', '.$modelcitymun->ctyname.', '.$modelprov->provname;
-                            }
-                            
+                              return PatiendetailsController::Address($model->hpercode);
                         },
                     ],
-                    
+                    */
                     [
                         'label'=>'Birth Date',
                         'contentOptions' => [
@@ -164,56 +147,22 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format'=>'text',
                         'value' => function($model)
                         {
-                            if(intval($model->patage)>0)
-                            {
-                                return intval($model->patage).' yr/s';
-                            }
-                            
-                            else if (intval($model->patagemo)>0)
-                            {
-                                return intval($model->patagemo).' mo/s';
-                            }
-                            
-                            else if (intval($model->patagedy)>0)
-                            {
-                                return intval($model->patagedy).' day/s';
-                            }
-                            
-                            else 
-                            {
-                                return intval($model->patagehr).' hr/s old';
-                            }
-                            
-                            //return  intval($model->patage).' year/s, '.intval($model->patagemo).' month/s, '.intval($model->patagedy).' day/s, '.intval($model->patagehr).' hr/s';
+                            return PatiendetailsController::Age($model->enccode);
                         },
                     ],
                     
 
-                    /*
+                    
                     [
                         'label'=>'Contact #',
                         
                         'format'=>'text',
                         'value' => function($model)
                         {
-                            $modelcontact = Htelep::find()
-                            ->where(['hpercode' =>  $model->hpercode])
-                            ->one();
-                            
-                            
-                            
-                            if($modelcontact != NULL)
-                            {
-                                return $modelcontact->pattel;
-                            }
-                            
-                            else
-                            {
-                                return "None";
-                            }
+                            return PatiendetailsController::Contact($model->hpercode);
                         },
                     ],
-                    */
+                    
                     
                     [
                         'label'=>'Admission Date & Time',
@@ -253,10 +202,39 @@ $this->params['breadcrumbs'][] = $this->title;
                             {
                                 return "Admitted";
                             }
-                    },
-
-                ],
-                ['class' => 'yii\grid\ActionColumn', 'template'=>'{print} <br> {clinical} <br> {laboratory} <br> {otherlaboratory} <br> {radiologyrequest} <br> {tag} <br> {surgical} <br> {cf4} <br> {newborninformation}',
+                        },
+                    ],
+                    
+                    [
+                        'label'=>'Required',
+                        'contentOptions' => [
+                            'style' => ['width' => '100px;'],
+                            'class' => 'text-wrap'
+                        ],
+                        'format'=>'text',
+                        'value' => function($model)
+                        {
+                            $validator = "";
+                            if(!ValidateController::Address($model->hpercode)){$validator = $validator."Brgy, ";}
+                            if(!ValidateController::Contact($model->hpercode)){$validator = $validator."Contact, ";}
+                            if(!ValidateController::Civilstatus($model->hpercode)){$validator = $validator."CivilStatus, ";}
+                            
+                            if($validator == ""){
+                                $_SESSION['template'] = '{print} <br>';
+                            }
+                            else {
+                                unset($_SESSION['template']);
+                            }
+                            
+                            
+                            //return ValidateController::Address($model->hpercode);
+                            
+                            return $validator;
+                        },
+                    ],
+                    
+                //['class' => 'yii\grid\ActionColumn', 'template'=>'{print} <br> {clinical} <br> {laboratory} <br> {otherlaboratory} <br> {radiologyrequest} <br> {tag} <br> {surgical} <br> {cf4} <br> {newborninformation}',
+                        ['class' => 'yii\grid\ActionColumn', 'template' => '{print} <br> {tag} <br> {surgical} <br> {cf4} <br> {newborninformation}',
                 'buttons'=>[
         
                             'print' => function($url, $model){
@@ -269,7 +247,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]
                                 );
                             },
-                    
+                            /*
                                 'clinical' => function($url, $model){
                                     return Html::a(Yii::t('app','Clinical Chem Request'),
                                     ['clinical',
@@ -311,6 +289,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ]
                             );
                             },
+                            */
                             'tag' => function($url, $model){
                                 return Html::a(Yii::t('app', 'Tag'),
                                 ['tag',

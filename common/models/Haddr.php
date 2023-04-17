@@ -109,4 +109,10 @@ class Haddr extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Hperson::className(), ['hpercode' => 'hpercode']);
     }
+    
+    
+    public function getHcity0()
+    {
+        return $this->hasOne(Hcity::className(), ['ctycode' => 'ctycode']);
+    }
 }

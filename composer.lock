@@ -4,11 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-//<<<<<<< geric_test_branch
+
+    "content-hash": "205f439acfa07c97fe494f157ba0175a",
+
+
 //    "content-hash": "fc266cd28385ac6e02f5a4efe31f2068",
-//=======
-    "content-hash": "8ca530a9952ab7f183f3126c6827ce67",
-//>>>>>>> main
+
+//    "content-hash": "8ca530a9952ab7f183f3126c6827ce67",
+
     "packages": [
         {
             "name": "alexantr/yii2-elfinder",
