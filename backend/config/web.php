@@ -56,7 +56,18 @@ $config = [
         'laboratoryrequestprinting' => [
             'class' => 'backend\modules\laboratoryrequestprinting\laboratoryrequestprinting',
         ],
-
+        'radiologyrequestprinting' => [
+            'class' => 'backend\modules\radiologyrequestprinting\radiologyrequestprinting',
+        ],
+        'dietrequestprinting' => [
+            'class' => 'backend\modules\dietrequestprinting\dietrequestprinting',
+        ],
+        'piu' => [
+            'class' => 'backend\modules\piu\piu',
+        ],
+        'er' => [
+            'class' => 'backend\modules\er\er',
+        ],
 
     ],
     'as globalAccess' => [

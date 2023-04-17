@@ -3,6 +3,7 @@
 namespace common\controllers;
 
 use Yii;
+use common\models\Hbrgy;
 use common\models\Hdocord;
 use common\models\Henctr;
 use common\models\Hpatroom;
@@ -14,6 +15,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\Hadmlog;
 use common\models\Hperson;
+use common\models\Hbed;
 
 
 /**
@@ -27,6 +29,46 @@ class PatiendetailsController extends Controller
         $model = Hperson::findOne($hperid);
         return  $model->patlast.' '.$model->patsuffix.', '.$model->patfirst.' '.$model->patmiddle;
         
+    }
+    
+    static  function Address($hperid)
+    {
+        $model = Hperson::findOne($hperid);
+        $modelbrg = Hbrgy::findOne($model->haddr->brg);
+        if($modelbrg == null)
+        {
+            $address =  $model->haddr->patstr.', '.
+                $model->haddr->hcity0->ctyname.', '.
+                $model->haddr->hcity0->ctyprovcod0->provname.', '.
+                $model->haddr->hcity0->ctyprovcod0->provreg0->regname; 
+        }
+        
+        
+        else{
+        $address =  $model->haddr->patstr.', '.
+                    $model->haddr->brg0->bgyname.', '.
+                    $model->haddr->hcity0->ctyname.', '.
+                    $model->haddr->hcity0->ctyprovcod0->provname.', '.
+                    $model->haddr->hcity0->ctyprovcod0->provreg0->regname; 
+        }
+        return $address;
+    }
+    
+    static  function Zipcode($hperid)
+    {
+        $model = Hperson::findOne($hperid);
+        //return  $model->patlast.' '.$model->patsuffix.', '.$model->patfirst.' '.$model->patmiddle;
+        $zipcode =  $model->haddr->patzip;
+            return $zipcode;
+    }
+    
+    
+    static  function Religion($hperid)
+    {
+        $model = Hperson::findOne($hperid);
+        //return  $model->patlast.' '.$model->patsuffix.', '.$model->patfirst.' '.$model->patmiddle;
+        $zipcode =  $model->haddr->patzip;
+        return $zipcode;
     }
     
     static  function Contact($hperid)
@@ -125,6 +167,23 @@ class PatiendetailsController extends Controller
         
     }
     
+    static  function Agecurrent($encid)
+    {
+        $bday = new \DateTime('1995-05-22'); // Your date of birth
+        $today = new \Datetime(date('Y-m-d'));
+        $diff = $today->diff($bday);
+        if($diff->y > 0){$age = $diff->y.' yr/s';}
+        else{
+             if($diff->m > 0){$age = $diff->m.' mo/s';}
+             else {
+                 if($diff->d > 0){$age = $diff->d.' day/s';}
+             }
+        }
+            
+                
+      return $age;
+        
+    }
     
     
     static  function Room($encid)
@@ -136,35 +195,21 @@ class PatiendetailsController extends Controller
         ->andFilterWhere(['patrmstat' => 'A'])
         ->one();
         
-        if($modelhpatroom != NULL)
-        {
-            $modelward = Hward::find()
-            ->where(['wardcode' =>  $modelhpatroom->wardcode])
-            ->andFilterWhere(['wardstat' => 'A'])
-            ->one();
-            
-            
-            if($modelward != NULL )
-            {
-                
-                //get the rmintkey to query in hroom
-                $rmintkey = substr($modelhpatroom->rmintkey,strlen($modelhpatroom->wardcode));
-                
-                $modelhroom = Hroom::find()
-                ->where(['rmcode' =>  $rmintkey])
-                ->andWhere(['wardcode' =>  $modelhpatroom->wardcode])
-                ->one();
-                
-                $room = $modelward->wardname.' - '.$modelhroom->rmname;
-            }
-            
-            
-            
-        }
-        else {
-            $room = "No Room";
-        }
-            
+        $modelward = Hward::find()
+        ->where(['wardcode' =>  $modelhpatroom->wardcode])
+        ->andFilterWhere(['wardstat' => 'A'])
+        ->one();
+        
+        $modelhroom = Hroom::find()
+        ->where(['rmintkey' =>  $modelhpatroom->rmintkey])
+        ->one();
+        
+        $modelbed = Hbed::find()
+        ->where(['bdintkey' =>  $modelhpatroom->bdintkey])
+        ->one();
+        
+        //$room = '['.$modelward->wardname.'] '.$modelhroom->rmname.' - '.$modelbed->bdname;
+        $room = '['.$modelward->wardname.'] '.$modelhroom->rmname;
             return $room;
     }
     

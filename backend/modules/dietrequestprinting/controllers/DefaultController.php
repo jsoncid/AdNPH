@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\laboratoryrequestprinting\controllers;
+namespace backend\modules\dietrequestprinting\controllers;
 
 use yii\web\Controller;
 use Yii;
@@ -11,9 +11,10 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
 use common\controllers\PatiendetailsController;
+use backend\modules\dietrequestprinting\models\DietSearch;
 
 /**
- * Default controller for the `laboratoryrequestprinting` module
+ * Default controller for the `dietrequestprinting` module
  */
 class DefaultController extends Controller
 {
@@ -46,9 +47,11 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new HdocordSearch();
+        $searchModel = new DietSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['orcode'=>'LABOR']); 
+        $dataProvider->query->andFilterWhere(['orcode'=>'DIETT']); 
+        $dataProvider->query->groupBy(['hdocord.enccode']);
+
         
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -63,8 +66,15 @@ class DefaultController extends Controller
     public function actionPatientdetails($hperid,$encid,$docointkey)
     {   
         if (($model = Henctr::findOne($encid)) !== null) {
-            $modelhdocord = Hdocord::findOne($docointkey);
             
+            $dietlogs = Hdocord::find()
+            ->select(['dodate','dietdesc','entby'])
+            ->innerJoin('hdiet','hdiet.dietcode = hdocord.dietcode')
+            ->where(['enccode'=>$model->enccode])
+            ->andWhere(['hdocord.orcode'=>'DIETT'])
+            ->orderBy(['hdocord.dodate'=>SORT_DESC])
+            ->asArray()
+            ->all();
 
                     $contact = PatiendetailsController::Contact($hperid);
                     $age = PatiendetailsController::Age($encid);
@@ -73,7 +83,7 @@ class DefaultController extends Controller
                     
             return $this->renderAjax('patientdetails', [
                 'model' => $model,
-                'modelhdocord' => $modelhdocord,
+                'dietlogs' => $dietlogs,
                 'contact' => $contact,
                 'age' => $age,
                 'room' => $room
@@ -88,27 +98,27 @@ class DefaultController extends Controller
     }
     
     
-    public function actionLabreqlist() 
+    public function actionDietreqlist() 
     {
 
         
-        $searchModel = new HdocordSearch();
+        $searchModel = new DietSearch();
         $dataProvider = $searchModel->search($_SESSION['labreqlistparam']);
-        $dataProvider->query->andFilterWhere(['orcode'=>'LABOR']);
+        $dataProvider->query->andFilterWhere(['orcode'=>'DIETT']);
 
         
          Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
          $pdf = new Pdf([
          'mode' => Pdf::MODE_CORE, // leaner size using standard fonts
          'destination' => Pdf::DEST_BROWSER,
-             'content' => $this->renderPartial('laboratory_list_result',['searchModel' => $searchModel,'dataProvider' => $dataProvider]),
+             'content' => $this->renderPartial('diet_list_result',['searchModel' => $searchModel,'dataProvider' => $dataProvider]),
          'options' => [
          // any mpdf options you wish to set
          ],
          'methods' => [
-         'SetTitle' => 'Laboratory Request List',
-         'SetSubject' => 'Generating PDF file for Laboratory Request List',
-         'SetHeader' => ['Laboratory Request List||Generated On: ' . date("r")],
+         'SetTitle' => 'Diet Request List',
+         'SetSubject' => 'Generating PDF file for Diet Request List',
+         'SetHeader' => ['Diet Request List||Generated On: ' . date("r")],
          'SetFooter' => ['|Page {PAGENO}|'],
          'SetAuthor' => 'AdNPH',
          'SetCreator' => 'AdNPH',
@@ -133,7 +143,4 @@ class DefaultController extends Controller
         }
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-    
-    
-
 }

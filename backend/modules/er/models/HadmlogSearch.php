@@ -1,7 +1,7 @@
 <?php
 
 //namespace backend\modules\content\models;
-namespace backend\modules\content\models\search;
+namespace backend\modules\er\models;
 
 use Yii;
 use yii\base\Model;
@@ -46,7 +46,7 @@ class HadmlogSearch extends Hadmlog
         $query = Hadmlog::find()->orderBy([
             'admdate' => SORT_DESC,
             //'item_no'=>SORT_ASC
-        ])->limit(20);
+        ]);
         $query->Where(['disdate' => null]);
         
         $dataProvider = new ActiveDataProvider([
@@ -57,6 +57,8 @@ class HadmlogSearch extends Hadmlog
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
+        
+        //$query->andFilterWhere(['like', 'admdate', $this->admdate]);
 
 
         /*

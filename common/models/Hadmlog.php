@@ -149,7 +149,7 @@ class Hadmlog extends \yii\db\ActiveRecord
             'newold' => 'Newold',
             'tacode' => 'Tacode',
             'tscode' => 'Tscode',
-            'admdate' => 'Admdate',
+            'admdate' => 'Admission Date (YYYY-MM-DD)',
             'admtime' => 'Admtime',
             'diagcode' => 'Diagcode',
             'admnotes' => 'Admnotes',

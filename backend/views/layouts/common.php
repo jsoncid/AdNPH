@@ -235,9 +235,55 @@ $logEntries[] = [
                             //'badgeBgClass' => 'badge-success',
                         ],
                         */
+                        
+                        [
+                            'label' => Yii::t('backend', 'Patient Information'),
+                            'url' => '#',
+                            'icon' => FAS::icon('layer-group', ['class' => ['nav-icon']]),
+                            'options' => ['class' => 'nav-item has-treeview'],
+                            //'active' => (Yii::$app->controller->module->id == 'rbac'),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Information Clearance'),
+                                    'icon' => FAS::icon('user', ['class' => ['nav-icon']]),
+                                    'url' => ['/piu'],
+                                ],
+                                /*
+                                [
+                                    'label' => Yii::t('backend', 'Patient`s Chart'),
+                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                    'url' => ['/transmittal/default/indexreceived'],
+                                ],
+                                */
+                                
+                            ],
+                        ],
+                        [
+                            'label' => Yii::t('backend', 'Emergency Room'),
+                            'url' => '#',
+                            'icon' => FAS::icon('layer-group', ['class' => ['nav-icon']]),
+                            'options' => ['class' => 'nav-item has-treeview'],
+                            //'active' => (Yii::$app->controller->module->id == 'rbac'),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Admission Clearance'),
+                                    'icon' => FAS::icon('user', ['class' => ['nav-icon']]),
+                                    'url' => ['/er'],
+                                ],
+                                /*
+                                 [
+                                 'label' => Yii::t('backend', 'Patient`s Chart'),
+                                 'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                 'url' => ['/transmittal/default/indexreceived'],
+                                 ],
+                                 */
+                                
+                            ],
+                        ],
+                        
                         [
                             'label' => Yii::t('backend', 'Admission'),
-                            'icon' => FAS::icon('user', ['class' => ['nav-icon']]),
+                            'icon' => FAS::icon('folder', ['class' => ['nav-icon']]),
                             'url' => ['/content/hadmlog'],
                             //'url' => ['/timeline-event/index'],
                             //'badge' => TimelineEvent::find()->today()->count(),
@@ -305,6 +351,40 @@ $logEntries[] = [
                             ],
                         ],
 
+                        [
+                            'label' => Yii::t('backend', 'Radiology'),
+                            'url' => '#',
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'options' => ['class' => 'nav-item has-treeview'],
+                            //'active' => (Yii::$app->controller->module->id == 'rbac'),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Radiology Request'),
+                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                    'url' => ['/radiologyrequestprinting'],
+                                ],
+                                
+                                
+                            ],
+                        ],
+                        
+                        [
+                            'label' => Yii::t('backend', 'Dietary'),
+                            'url' => '#',
+                            'icon' => FAS::icon('stream', ['class' => ['nav-icon']]),
+                            'options' => ['class' => 'nav-item has-treeview'],
+                            //'active' => (Yii::$app->controller->module->id == 'rbac'),
+                            'items' => [
+                                [
+                                    'label' => Yii::t('backend', 'Diet Request'),
+                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                    'url' => ['/dietrequestprinting'],
+                                ],
+                                
+                                
+                            ],
+                        ],
+                        
 
 
 

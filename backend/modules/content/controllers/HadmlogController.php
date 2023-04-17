@@ -3,6 +3,7 @@
 namespace backend\modules\content\controllers;
 
 use Yii;
+use common\controllers\ValidateController;
 use common\models\Hadmlog;
 use backend\modules\content\models\search\HadmlogSearch;
 use yii\web\Controller;
@@ -11,6 +12,7 @@ use yii\filters\VerbFilter;
 
 use kartik\mpdf\Pdf;
 use common\models\Hperson;
+use phpDocumentor\Reflection\Types\This;
 
 
 /**
@@ -47,73 +49,51 @@ class HadmlogController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single Hadmlog model.
-     * @param string $enccode Enccode
-     * @return mixed
-     */
-    public function actionView($enccode)
+    
+    public  function Validatedata($hperid)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($enccode),
-        ]);
-    }
-
-
-    /**
-     * Creates a new Hadmlog model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Hadmlog();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'enccode' => $model->enccode]);
+        $validator = null;
+        if(!ValidateController::Address($hperid)){$validator = $validator."Brgy, ";}
+        if(!ValidateController::Contact($hperid)){$validator = $validator."Contact, ";}
+        if(!ValidateController::Civilstatus($hperid)){$validator = $validator."CivilStatus, ";}
+        
+        if($validator == null){
+            return TRUE;      
         }
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Hadmlog model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $enccode Enccode
-     * @return mixed
-     */
-    public function actionUpdate($enccode)
-    {
-        $model = $this->findModel($enccode);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'enccode' => $model->enccode]);
+        else {
+            return FALSE;     
         }
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
+    
+    
     public function actionPrint($hpercode)
     {
+        if($this->Validatedata($hpercode))
+        {
+               $model = $this->findModel($hpercode);
+                $content =  $this->renderPartial('_chart', [
+                 'model' => $model,
+                ]);
+                
+                $pdf = new Pdf([
+                    'mode' => Pdf::MODE_CORE,
+                    'format' => Pdf::FORMAT_A4,
+                    'orientation' => Pdf::ORIENT_PORTRAIT,
+                    'destination' => Pdf::DEST_BROWSER,
+                    'cssFile' => 'css/header.css',
+                    'content' => $content,
+                    'options' => ['title' => 'PHO'],
+                
+                ]);   
+                return $pdf->render();
+        }
         
-       $model = $this->findModel($hpercode);
-        $content =  $this->renderPartial('_chart', [
-         'model' => $model,
-        ]);
-        
-        $pdf = new Pdf([
-            'mode' => Pdf::MODE_CORE,
-            'format' => Pdf::FORMAT_A4,
-            'orientation' => Pdf::ORIENT_PORTRAIT,
-            'destination' => Pdf::DEST_BROWSER,
-            'cssFile' => 'css/header.css',
-            'content' => $content,
-            'options' => ['title' => 'PHO'],
-        
-        ]);
-        
-        return $pdf->render();
+        else
+        {
+            Yii::$app->session->setFlash('error', "Cannot Print Chart inomplete data. Refer to Required column");
+            return $this->redirect(['index']);
+        }
+       
     }
 
     public function actionClinical($hpercode)
@@ -280,18 +260,6 @@ public function actionLaboratory($hpercode)
         }
 
 
-    /**
-     * Deletes an existing Hadmlog model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $enccode Enccode
-     * @return mixed
-     */
-    public function actionDelete($enccode)
-    {
-        $this->findModel($enccode)->delete();
-
-        return $this->redirect(['index']);
-    }
 
 
 

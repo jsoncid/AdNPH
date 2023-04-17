@@ -1,4 +1,5 @@
 <?php
+use common\controllers\HproviderController;
 use common\controllers\PatiendetailsController;
 ?>
 <table style="width:100% ;text-align: left">
@@ -61,13 +62,6 @@ use common\controllers\PatiendetailsController;
     </td> 
   </tr>
   
-  <tr>
-    <td>Date Ordered</td>
-    <td>:</td>
-    <td>
-    	<?php echo $modelhdocord->dodate;?>
-    </td> 
-  </tr>
   
   <tr>
     <td>Room</td>
@@ -76,16 +70,41 @@ use common\controllers\PatiendetailsController;
     	<?php echo $room;?>
     </td> 
   </tr>
-  
-  <tr>
-    <td>Chief Complain/s</td>
-    <td>:</td>
-    <td>
-    	<?php echo $model->hadmlog->admnotes;?>
-    </td> 
-  </tr>
-  
-  
-
 
 </table>
+
+
+<hr>
+
+<table style="width:100% ;text-align: center">
+  <tr>
+    <th style="width:30% ;">Date Ordered</th>
+    <th style="width:30% ;">Diet Type</th>
+    <th style="width:40% ;">Order By</th>
+  </tr>
+  
+  <?php 
+
+  foreach($dietlogs as $arr){
+          echo "<tr>";
+            echo "<td>";
+                echo $arr['dodate'];
+            echo "</td>";
+            echo "<td>";
+                echo $arr['dietdesc'];
+            echo "</td>";
+            echo "<td>";
+                echo HproviderController::Fullname($arr['entby']);;
+            echo "</td>";
+          echo "</tr>";
+      
+  }
+  ?>
+ 
+</table>
+
+
+
+<?php 
+//print_r($dietlogs)
+?>
