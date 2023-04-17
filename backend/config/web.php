@@ -21,7 +21,20 @@ $config = [
             'enableAutoLogin' => true,
             'as afterLogin' => common\behaviors\LoginTimestampBehavior::class,
         ],
+        'log' => [
+            'targets' => [
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning', 'info'],
+                    'logFile' => '@app/runtime/logs/myapp.log',
+                    'maxFileSize' => 1024 * 2,
+                    'maxLogFiles' => 20,
+                ],
+            ],
+        ],
     ],
+        
+        
 
     
 
@@ -56,6 +69,7 @@ $config = [
         'laboratoryrequestprinting' => [
             'class' => 'backend\modules\laboratoryrequestprinting\laboratoryrequestprinting',
         ],
+
         'radiologyrequestprinting' => [
             'class' => 'backend\modules\radiologyrequestprinting\radiologyrequestprinting',
         ],
@@ -67,6 +81,19 @@ $config = [
         ],
         'er' => [
             'class' => 'backend\modules\er\er',
+            
+        'labresult' => [
+            'class' => 'backend\modules\labresult\labresult',  
+        ],
+        'labresultlogs' => [
+            'class' => 'backend\modules\labresultlogs\labresultlogs',
+        ],
+        'radresult' => [
+            'class' => 'backend\modules\radresult\radresult',
+        ],
+        'pdfjs' => [
+            'class' => '\yii2assets\pdfjs\Module',
+
         ],
 
     ],

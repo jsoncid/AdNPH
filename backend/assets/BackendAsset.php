@@ -33,6 +33,7 @@ class BackendAsset extends AssetBundle
     public $js = [
         'app.js',
         'modal.js',
+        'main.js',
     ];
 
     public $publishOptions = [
