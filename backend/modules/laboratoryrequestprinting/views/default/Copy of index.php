@@ -77,7 +77,7 @@ $this->registerJs("$(function() {
                     [
                         'header'=>'Health Record No.',
                         'value' => function ($model) {
-                            return Html::a($model->hpercode, ['patientdetails','hperid'=>$model->hpercode,'encid'=>$model->enccode,'docointkey'=>$model->docointkey], ['class' => 'popupModal']);
+                        return Html::a($model->hpercode, ['patientdetails','hperid'=>$model->hpercode,'encid'=>$model->enccode,'docointkey'=>$model->docointkey], ['class' => 'popupModal']);
                         },
                     'format' => 'raw'
                     ],
@@ -95,7 +95,6 @@ $this->registerJs("$(function() {
                    
                     'dodate',
                     //'pcchrgcod',
-                    /*
                     [
                         'label'=>'Room',
                         'format'=>'text',
@@ -104,7 +103,7 @@ $this->registerJs("$(function() {
                             return PatiendetailsController::Room($model->enccode);
                         },
                     ],
-                    */
+                    
                     [
                         'label'=>'Procedure/Examination',
                         

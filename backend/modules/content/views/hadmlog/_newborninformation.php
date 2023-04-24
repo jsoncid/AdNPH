@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\controllers\PatiendetailsController;
 use common\models\Haddr;
 use common\models\Hbrgy;
 use common\models\Hcity;
@@ -12,77 +13,10 @@ use backend\assets\HeaderAsset;
 HeaderAsset:: register($this);
 $this->registerCssFile("/backend/web/css/header.css");
 
-$address = "";
-$modeladdr = Haddr::find()
-->where(['hpercode' =>  $model->hpercode])
-->one();
+$address = PatiendetailsController::Address($model->hpercode);
+$contact = PatiendetailsController::Contact($model->hpercode);
+$age = PatiendetailsController::Age($model2->enccode);
 
-$modelbrg = Hbrgy::find()
-->where(['bgycode' =>  $modeladdr->brg])
-->one();
-
-$modelcitymun = Hcity::find()
-->where(['ctycode' =>  $modeladdr->ctycode])
-->one();
-
-$modelprov = Hprov::find()
-->where(['provcode' =>  $modeladdr->provcode])
-->one();
-if($modelbrg != NULL)
-{
-    $address = $modeladdr->patstr.', '.$modelbrg->bgyname.', '.$modelcitymun->ctyname.', '.$modelprov->provname;
-}
-else
-{
-    $address = None;
-}
-
-$contact = "";
-$modelcontact = Htelep::find()
-->where(['hpercode' => $model->hpercode])
-->one();
-
-if($modelcontact != NULL)
-{
-    $contact= $modelcontact->pattel;
-}
-
-else
-{
-    $contact = "None";
-}
-
-$age="";
-$modelage= Hadmlog::find()
-->where(['hpercode' => $model->hpercode])
-->one();
-
-if($modelage !== NULL)
-{
-  $age=$modelage->patage;
-}
-else
-{
-  $age= "None";
-}
-
-$adddatetime="";
-$modeladddate= Hadmlog::find()
-->where(['hpercode' => $model->hpercode])
-->one();
-
-$modeladdtime= Hadmlog::find()
-->where(['hpercode' => $model->hpercode])
-->one();
-
-if($modeladddate !== NULL)
-{
-    $adddatetime=$modeladddate->admdate.''. $modeladdtime->admtime; 
-}
-else 
-{
-    $adddatetime= "None";
-}
 ?>
 
 <header class="container">
@@ -145,7 +79,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age ?>
     </td> 
   </tr>
   
@@ -165,7 +99,6 @@ else
                 <td style="width:50px ;">Date and time of Delivery</td>
                 <td style="width:20px ;">:</td>
                 <td style="width:150px ;">
-                	<?php //echo $adddatetime;//echo substr($adddatetime,0,10); ?>
                 </td> 
 
 

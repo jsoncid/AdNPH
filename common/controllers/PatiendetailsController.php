@@ -5,8 +5,10 @@ namespace common\controllers;
 use Yii;
 use common\models\Hbrgy;
 use common\models\Hdocord;
+use common\models\Hencdiag;
 use common\models\Henctr;
 use common\models\Hpatroom;
+use common\models\Hprocm;
 use common\models\Hroom;
 use common\models\Htelep;
 use common\models\Hward;
@@ -16,6 +18,7 @@ use yii\filters\VerbFilter;
 use common\models\Hadmlog;
 use common\models\Hperson;
 use common\models\Hbed;
+use common\models\Hproc;
 
 
 /**
@@ -214,6 +217,85 @@ class PatiendetailsController extends Controller
     }
     
         
+    
+    
+    static  function FinalDiagnosis($enccode)
+    {
+        $desc = "";
+        $model = Hencdiag::find()
+        ->where(['tdcode'=>'FINDX'])
+        ->andFilterWhere(['enccode'=>$enccode])
+        ->one();
+        
+        if($model != null)
+        { return $model->diagtext; } else { return $desc;}
+    }
+    
+    static  function ICDCode($enccode)
+    {
+        $desc = "";
+        $model = Hencdiag::find()
+        ->where(['tdcode'=>'FINDX'])
+        ->andFilterWhere(['enccode'=>$enccode])
+        ->one();
+        
+        if($model != null)
+        { return $model->diagcode; } else { return $desc;}
+        
+    }
+    
+    
+    static  function PatientLaboratory($enccode)
+    {
+        $desc = "Cleared";
+        $model = Hdocord::find()
+        ->where(['orcode'=>'LABOR'])
+        ->andFilterWhere(['enccode'=>$enccode])
+        //->andFilterWhere(['dostat'=>'A'])
+        //->andFilterWhere(['estatus'=>'S'])
+        ->andFilterWhere(['or', 'pcchrgcod=""', 'pcchrgcod is null'])
+        ->all();
+        
+        if($model != null)
+        {
+            foreach ($model as $id => $participants) {
+                $desc = $desc.$participants['dodate']." - ";
+                $labdesc = Hprocm::find()->where(['proccode'=>$participants['proccode']])->one();
+                $desc = $desc.$labdesc->procdesc."<br>";
+            }
+            return $desc;
+        }
+        else
+        {return $desc;}
+        
+    }
+    
+    
+    static  function PatientRadiology($enccode)
+    {
+        $desc = "Cleared";
+        $model = Hdocord::find()
+        ->where(['orcode'=>'RADIO'])
+        ->andFilterWhere(['enccode'=>$enccode])
+        //->andFilterWhere(['estatus' => 'S'])
+        //->andFilterWhere(['dostat' => 'I'])
+        ->andFilterWhere(['or', 'pcchrgcod=""', 'pcchrgcod is null'])
+        ->all();
+        
+        if($model != null)
+        {
+            foreach ($model as $id => $participants) {
+                $desc = $desc.$participants['dodate']." - ";
+                $labdesc = Hprocm::find()->where(['proccode'=>$participants['proccode']])->one();
+                $desc = $desc.$labdesc->procdesc."<br>";
+            }
+            return $desc;
+        }
+        else
+        {return $desc;}
+        
+    }
+    
     
 
 

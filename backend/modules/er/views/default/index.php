@@ -13,11 +13,6 @@ use common\models\Htelep;
 use common\controllers\PatiendetailsController;
 use common\controllers\ValidateController;
 
-/**
- * @var yii\web\View $this
- * @var backend\modules\content\models\HadmlogSearch $searchModel
- * @var yii\data\ActiveDataProvider $dataProvider
- */
 
 $this->title = 'Admission Logs';
 $this->params['breadcrumbs'][] = $this->title;

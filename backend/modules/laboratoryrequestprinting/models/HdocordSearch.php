@@ -18,7 +18,7 @@ class HdocordSearch extends Hdocord
     public function rules()
     {
         return [
-            [['docointkey', 'enccode', 'dodate', 'dotime', 'licno', 'ordcon', 'orcode', 'hpercode', 'upicode', 'dopriority', 'dodtepost', 'dotmepost', 'dostat', 'dolock', 'datemod', 'updsw', 'confdl', 'donotes', 'entby', 'verby', 'ordreas', 'doctype', 'orderupd', 'intkeyref', 'proccode', 'orstat', 'statdate', 'stattime', 'currency', 'uomcode', 'pcchrgcod', 'pcdisch', 'acctno', 'estatus', 'ordsrc', 'prikey', 'entryby', 'incision_mode', 'dietcode', 'compense', 'rem1', 'discount', 'chrgtype', 'coldte', 'lbno', 'recdte', 'resdte', 'reldte', 'paystat', 'bdate', 'gender', 'apprv', 'apprvby', 'apprvdte', 'apprvrmrks','laboratorytest'], 'safe'],
+            [['docointkey', 'enccode', 'dodate', 'dotime', 'licno', 'ordcon', 'orcode', 'hpercode', 'upicode', 'dopriority', 'dodtepost', 'dotmepost', 'dostat', 'dolock', 'datemod', 'updsw', 'confdl', 'donotes', 'entby', 'verby', 'ordreas', 'doctype', 'orderupd', 'intkeyref', 'proccode', 'orstat', 'statdate', 'stattime', 'currency', 'uomcode', 'pcchrgcod', 'pcdisch', 'acctno', 'estatus', 'ordsrc', 'prikey', 'entryby', 'incision_mode', 'dietcode', 'compense', 'rem1', 'discount', 'chrgtype', 'coldte', 'lbno', 'recdte', 'resdte', 'reldte', 'paystat', 'bdate', 'gender', 'apprv', 'apprvby', 'apprvdte', 'apprvrmrks'], 'safe'],
             [['pchrgup', 'pchrgqty', 'pcchrgamt', 'rfee1', 'rfee2', 'rfee3', 'disamt', 'discbal', 'phicamt', 'csamt', 'ncamt', 'paidamt'], 'number'],
             [['opergrp'], 'integer'],
         ];
@@ -42,25 +42,18 @@ class HdocordSearch extends Hdocord
      */
     public function search($params)
     {
-        //$query = Hdocord::find();
-        $query = Hdocord::find()
-            ->innerJoin('hprocm','hprocm.proccode = hdocord.proccode AND hprocm.costcenter = "LABOR"')
-            ->orderBy([
-            'dodate' => SORT_DESC,
-            //'item_no'=>SORT_ASC
-        ]);
+        $query = Hdocord::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => false,
         ]);
 
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
         
-        $query->andFilterWhere([ 'hprocm.proccode' => $this->laboratorytest]);
-
+        //$query->andFilterWhere(['is', 'pcchrgcod' , null]);
+        /*
         $query->andFilterWhere([
             'dodate' => $this->dodate,
             'dotime' => $this->dotime,
@@ -89,7 +82,7 @@ class HdocordSearch extends Hdocord
             'bdate' => $this->bdate,
             'apprvdte' => $this->apprvdte,
         ]);
-
+        
         $query->andFilterWhere(['like', 'docointkey', $this->docointkey])
             ->andFilterWhere(['like', 'enccode', $this->enccode])
             ->andFilterWhere(['like', 'licno', $this->licno])
@@ -132,7 +125,7 @@ class HdocordSearch extends Hdocord
             ->andFilterWhere(['like', 'apprv', $this->apprv])
             ->andFilterWhere(['like', 'apprvby', $this->apprvby])
             ->andFilterWhere(['like', 'apprvrmrks', $this->apprvrmrks]);
-
+            */
         return $dataProvider;
     }
 }

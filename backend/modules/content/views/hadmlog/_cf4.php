@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\controllers\PatiendetailsController;
 use common\models\Haddr;
 use common\models\Hbrgy;
 use common\models\Hcity;
@@ -12,59 +13,9 @@ use backend\assets\HeaderAsset;
 HeaderAsset:: register($this);
 $this->registerCssFile("/backend/web/css/header.css");
 
-$address = "";
-$modeladdr = Haddr::find()
-->where(['hpercode' =>  $model->hpercode])
-->one();
-
-$modelbrg = Hbrgy::find()
-->where(['bgycode' =>  $modeladdr->brg])
-->one();
-
-$modelcitymun = Hcity::find()
-->where(['ctycode' =>  $modeladdr->ctycode])
-->one();
-
-$modelprov = Hprov::find()
-->where(['provcode' =>  $modeladdr->provcode])
-->one();
-if($modelbrg != NULL)
-{
-    $address = $modeladdr->patstr.', '.$modelbrg->bgyname.', '.$modelcitymun->ctyname.', '.$modelprov->provname;
-}
-else
-{
-    $address = None;
-}
-
-$contact = "";
-$modelcontact = Htelep::find()
-->where(['hpercode' => $model->hpercode])
-->one();
-
-if($modelcontact != NULL)
-{
-    $contact= $modelcontact->pattel;
-}
-
-else
-{
-    $contact = "None";
-}
-
-$age="";
-$modelage= Hadmlog::find()
-->where(['hpercode' => $model->hpercode])
-->one();
-
-if($modelage !== NULL)
-{
-  $age=$modelage->patage;
-}
-else
-{
-  $age= "None";
-}
+$address = PatiendetailsController::Address($model->hpercode);
+$contact = PatiendetailsController::Contact($model->hpercode);
+$age = PatiendetailsController::Age($model2->enccode);
 
 $adddatetime="";
 $modeladddate= Hadmlog::find()
@@ -77,7 +28,7 @@ $modeladdtime= Hadmlog::find()
 
 if($modeladddate !== NULL)
 {
-    $adddatetime=$modeladddate->admdate.''. $modeladdtime->admtime; 
+    $adddatetime = date('m/d/Y h:i:s a', strtotime($modeladddate->admdate)); 
 }
 else 
 {
@@ -135,7 +86,7 @@ else
                                      				<td style="width:90px ;text-align: left; border: 0px solid black; border-collapse: collapse;"><p style="font-size:9px">4. Date Admitted:</p></td>
                                      					<td style="text-align: left; border: 0px solid black; border-collapse: collapse;"><p style="font-size:11px"><B><?php echo substr($adddatetime,0,10); ?></B></p></td>
                                      				<td style="width:90px ;text-align: left; border: 0px solid black; border-collapse: collapse;"><p style="font-size:9px">Time Admitted:</p></td>
-                                     					<td style="text-align: left; border: 0px solid black; border-collapse: collapse;"><p style="font-size:11px"><B><?php echo substr($adddatetime,11,21); ?></B></B></p></td>
+                                     					<td style="text-align: left; border: 0px solid black; border-collapse: collapse;"><p style="font-size:11px"><B><?php echo substr($adddatetime,11,18); ?></B></B></p></td>
                                      				
                                      			</tr>
                                      		</table>

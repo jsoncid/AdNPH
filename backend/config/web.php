@@ -81,7 +81,7 @@ $config = [
         ],
         'er' => [
             'class' => 'backend\modules\er\er',
-            
+        ],    
         'labresult' => [
             'class' => 'backend\modules\labresult\labresult',  
         ],
@@ -94,6 +94,12 @@ $config = [
         'pdfjs' => [
             'class' => '\yii2assets\pdfjs\Module',
 
+        ],
+        'radresultlogs' => [
+            'class' => 'backend\modules\radresultlogs\radresultlogs',
+        ],
+        'patientdischargeclearance' => [
+            'class' => 'backend\modules\patientdischargeclearance\patientdischargeclearance',
         ],
 
     ],
@@ -138,7 +144,7 @@ $config = [
             ],
         ],
     ],
-  ],
+ 
 ];
 
 if (YII_ENV_DEV) {

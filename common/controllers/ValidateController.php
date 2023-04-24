@@ -5,7 +5,9 @@ namespace common\controllers;
 
 use common\models\Hadmlog;
 use common\models\Hcrsward;
+use common\models\Hdocord;
 use common\models\Henctr;
+use common\models\Herlog;
 use common\models\Hmrhisto;
 use common\models\Hperson;
 use common\models\Hpesignsothers;
@@ -16,6 +18,7 @@ use common\models\Hvitalsign;
 use common\models\Hvsothr;
 use yii\web\Controller;
 use common\models\Hbrgy;
+use common\models\Hencdiag;
 
 
 
@@ -172,7 +175,9 @@ class ValidateController extends Controller
             static  function AdmissionDiagnosis($enccode)
             {
                 $model = Hadmlog::find()->where(['enccode'=>$enccode])->one();
-                if($model->admtxt != null){return TRUE;} else{return FALSE;}
+                if($model != null)
+                {if($model->admtxt != null){return TRUE;} else{return FALSE;}}
+                else{return FALSE;}
             }
             
             static  function HistoryPresentIllness($enccode)
@@ -382,6 +387,127 @@ class ValidateController extends Controller
             
             
     /*******************************************************  cf4 validation ******************/
+            
+            
+    /*******************************************************  discharge validation ******************/
 
-
+            static  function FinalDiagnosis($enccode)
+            {
+                $model = Hencdiag::find()
+                ->where(['enccode'=>$enccode])
+                ->andFilterWhere(['enccode'=>$enccode])
+                ->one();
+                
+                if($model != null)
+                { 
+                    if($model->diagtext != null)
+                    {return true;} 
+                    else { return false;}               
+                }        
+                else { return false;}
+            }
+            
+            
+            static  function ICDCode($enccode)
+            {
+                $model = Hencdiag::find()
+                ->where(['tdcode'=>'FINDX'])
+                ->andFilterWhere(['enccode'=>$enccode])
+                ->one();
+                
+                if($model != null)
+                {
+                    if($model->diagcode != null)
+                    {return true;} else { return false;}
+                }
+                else { return false;}
+                
+            }
+    /*******************************************************  discharge validation ******************/
+            
+    /******************************************************* course in the ward with discharge ******/
+            static  function CourseInTheWardDischarge($enccode)
+            {
+                $desc = null;
+                $admdate = null;
+                $disdate = null;
+                $modelenctr = Henctr::find()->where(['enccode'=>$enccode])->one();
+                
+                if($modelenctr->toecode == 'ADM')
+                {
+                    $m = Hadmlog::find()->where(['enccode'=>$enccode])->one();
+                    $admdate =strtotime(substr($m->admdate, 0,10)) ;
+                    $disdate =strtotime(substr($m->disdate, 0,10)) ;
+                    $tempadmdate = $m->admdate;
+                }
+                elseif ($modelenctr->toecode == 'ER')
+                {
+                    $m = Herlog::find()->where(['enccode'=>$enccode])->one();
+                    $admdate = strtotime(substr($m->erdate, 0,10))  ;
+                    $disdate = strtotime(substr($m->erdtedis, 0,10));
+                    $tempadmdate = $m->erdate;
+                }
+                
+                
+                if($disdate!=null)
+                {
+                $totaldays = ($disdate - $admdate)/60/60/24;
+                $currentdate = $tempadmdate;
+                
+                    $indicator = true;
+                    for ($x = 0; $x <= $totaldays; $x++) {
+                        if(ValidateController::CourseInTheWardDate($enccode,date('Y-m-d', strtotime($currentdate . ' +'.$x.' day'))) == false)
+                        {
+                            $indicator = false;
+                        }
+                    }
+                    return  $indicator;
+                }
+                else{return false;}
+                
+            }
+            
+            static  function CourseInTheWardDate($enccode,$date)
+            {
+                $model = Hcrsward::find()->where(['enccode'=>$enccode])->andFilterWhere(['like', 'dtetake', $date])->one();
+                if($model != null)
+                {return TRUE;}
+                else {return FALSE;}
+            }
+      /******************************************************* course in the ward with discharge ******/
+            
+            
+            
+            static  function PatientLaboratory($enccode)
+            {
+                $model = Hdocord::find()
+                ->where(['orcode'=>'LABOR'])
+                ->andFilterWhere(['enccode'=>$enccode])
+                //->andFilterWhere(['dostat'=>'A'])
+                ->andFilterWhere(['or', 'pcchrgcod=""', 'pcchrgcod is null'])
+                ->all();
+                
+                if($model != null)
+                {return FALSE;}
+                else{return TRUE;}
+                
+            }
+            
+            static  function PatientRadiology($enccode)
+            {
+                $model = Hdocord::find()
+                ->where(['orcode'=>'RADIO'])
+                ->andFilterWhere(['enccode'=>$enccode])
+                //->andFilterWhere(['dostat'=>'A'])
+                ->andFilterWhere(['or', 'pcchrgcod=""', 'pcchrgcod is null'])
+                ->all();
+                
+                if($model != null)
+                {return FALSE;}
+                else{return TRUE;}
+                
+            }
+            
+            
+            
 }

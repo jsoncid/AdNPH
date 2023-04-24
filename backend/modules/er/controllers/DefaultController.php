@@ -17,34 +17,7 @@ use yii\web\NotFoundHttpException;
 class DefaultController extends Controller
 {
     
-    public function behaviors()
-    {
-        /*
-        return [
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-        */
-        
-        return [
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'only' => ['create', 'update'],
-                'rules' => [
-                    // allow authenticated users
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    // everything else is denied
-                ],
-            ],
-        ];
-    }
+
     /**
      * Renders the index view for the module
      * @return string

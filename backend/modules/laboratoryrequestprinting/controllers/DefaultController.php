@@ -6,11 +6,11 @@ use yii\web\Controller;
 use Yii;
 use common\models\Hdocord;
 use common\models\Henctr;
-use common\models\search\HdocordSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
 use common\controllers\PatiendetailsController;
+use backend\modules\laboratoryrequestprinting\models\HdocordSearch;
 
 /**
  * Default controller for the `laboratoryrequestprinting` module
@@ -48,13 +48,15 @@ class DefaultController extends Controller
     {
         $searchModel = new HdocordSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['orcode'=>'LABOR']); 
+        $dataProvider->query->andWhere('pcchrgcod is null');
         
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+
     
 
 

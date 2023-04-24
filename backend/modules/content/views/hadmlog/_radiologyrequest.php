@@ -2,6 +2,7 @@
 <?php 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\controllers\PatiendetailsController;
 use common\models\Haddr;
 use common\models\Hbrgy;
 use common\models\Hcity;
@@ -10,62 +11,11 @@ use common\models\Htelep;
 use common\models\Hadmlog;
 
 
-$address = "";
-$modeladdr = Haddr::find()
-->where(['hpercode' =>  $model->hpercode])
-->one();
 
-$modelbrg = Hbrgy::find()
-->where(['bgycode' =>  $modeladdr->brg])
-->one();
+$address = PatiendetailsController::Address($model->hpercode);
+$contact = PatiendetailsController::Contact($model->hpercode);
+$age = PatiendetailsController::Age($model2->enccode);
 
-$modelcitymun = Hcity::find()
-->where(['ctycode' =>  $modeladdr->ctycode])
-->one();
-
-$modelprov = Hprov::find()
-->where(['provcode' =>  $modeladdr->provcode])
-->one();
-
-if($modelbrg != NULL)
-{
-    $address = $modeladdr->patstr.', '.$modelbrg->bgyname.', '.$modelcitymun->ctyname.', '.$modelprov->provname;
-}
-else
-{
-    $address = $modeladdr->patstr.', '.$modelcitymun->ctyname.', '.$modelprov->provname;
-}
-
-
-
-$contact = "";
-$modelcontact = Htelep::find()
-->where(['hpercode' => $model->hpercode])
-->one();
-
-if($modelcontact != NULL)
-{
-    $contact= $modelcontact->pattel;
-}
-
-else
-{
-    $contact = "None";
-}
-$age="";
-$modelage= Hadmlog::find()
-->where(['hpercode' => $model->hpercode])
-->one();
-
-if($modelage !== NULL)
-{
-  $age=$modelage->patage;
-}
-else
-{
-  $age= "None";
-
-}
 ?>
 
 
@@ -142,7 +92,7 @@ else
     <td>Civil Status</td>
     <td>:</td>
     <td>
-    	<?php echo $model->patcstat; ?>
+    	<?php echo PatiendetailsController::Civilstatus($model->hpercode); ?>
     </td> 
   </tr>
   
@@ -150,7 +100,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age; ?>
     </td> 
   </tr>
   

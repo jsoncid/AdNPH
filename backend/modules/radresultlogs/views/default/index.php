@@ -18,7 +18,7 @@ use common\controllers\HproviderController;
  * @var yii\data\ActiveDataProvider $dataProvider
  */
 
-$this->title = 'Laboratory Requests';
+$this->title = 'Radiology Request/s without charge slip';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -71,15 +71,17 @@ $this->registerJs("$(function() {
                     'class' => ['table', 'text-nowrap', 'table-striped', 'table-bordered', 'mb-0'],
                 ],
                 'dataProvider' => $dataProvider,
-                //'filterModel' => $searchModel,
+                'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    
+                    
                     [
                         'header'=>'Health Record No.',
                         'value' => function ($model) {
                             return Html::a($model->hpercode, ['patientdetails','hperid'=>$model->hpercode,'encid'=>$model->enccode,'docointkey'=>$model->docointkey], ['class' => 'popupModal']);
                         },
-                    'format' => 'raw'
+                         'format' => 'raw'
                     ],
                     
                     [
@@ -94,7 +96,19 @@ $this->registerJs("$(function() {
                     
                    
                     'dodate',
-                    //'pcchrgcod',
+                    
+                    [
+                        'label'=>'Charge Slip No.',
+                        
+                        'format'=>'text',
+                        'value' => function($model)
+                        {
+                            return $model->pcchrgcod;
+                        
+                            
+                    },
+                    ],
+                    
                     /*
                     [
                         'label'=>'Room',
@@ -121,7 +135,7 @@ $this->registerJs("$(function() {
                             
                         },
                     ],
-                    
+                    /*
                     [
                         'label'=>'Ordered By',
                         
@@ -134,11 +148,18 @@ $this->registerJs("$(function() {
                     
                     'dopriority',
                  
+                    */
                     
                     
                     
-                    
-                    //['class' => \common\widgets\ActionColumn::class],
+                    [
+                        'class' => \common\widgets\ActionColumn::class,
+                        'visibleButtons' =>
+                        [
+                            'update' => Yii::$app->user->can('updatePost'),
+                            'delete' => Yii::$app->user->can('updatePost')
+                        ]
+                    ],
                 ],
             ]); ?>
     
@@ -149,15 +170,15 @@ $this->registerJs("$(function() {
     </div>
     
     <?php 
-    $_SESSION['labreqlistparam'] = Yii::$app->request->queryParams;
+   /* $_SESSION['labreqlistparam'] = Yii::$app->request->queryParams;
     echo Html::a('<i class="fa far fa-hand-point-up"></i> Print Result', ['/laboratoryrequestprinting/default/labreqlist'], [
             'class'=>'btn btn-danger',
             'target'=>'_blank',
             'data-toggle'=>'tooltip',
+   
             //'title'=>'Will open the generated PDF file in a new window'
         ]);
-    
-
+    */
     ?>
     
     
