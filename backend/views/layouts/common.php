@@ -248,13 +248,13 @@ $logEntries[] = [
                                     'icon' => FAS::icon('user', ['class' => ['nav-icon']]),
                                     'url' => ['/piu'],
                                 ],
-                                /*
+                                
                                 [
-                                    'label' => Yii::t('backend', 'Patient`s Chart'),
-                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
-                                    'url' => ['/transmittal/default/indexreceived'],
+                                    'label' => Yii::t('backend', 'Patient`s Discharge Clearance'),
+                                    'icon' => FAS::icon('user', ['class' => ['nav-icon']]),
+                                    'url' => ['/patientdischargeclearance'],
                                 ],
-                                */
+                                
                                 
                             ],
                         ],
@@ -342,6 +342,11 @@ $logEntries[] = [
                             //'active' => (Yii::$app->controller->module->id == 'rbac'),
                             'items' => [
                                 [
+                                    'label' => Yii::t('backend', 'Lab. w/o Charge Slip'),
+                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                    'url' => ['/labresultlogs'],
+                                ],
+                                [
                                     'label' => Yii::t('backend', 'Laboratory Request'),
                                     'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
                                     'url' => ['/laboratoryrequestprinting'],
@@ -351,15 +356,16 @@ $logEntries[] = [
                                     'label' => Yii::t('backend', 'Laboratory Result'),
                                     'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
                                     'url' => ['/labresult'],
-                                ],
-                                [
-                                    'label' => Yii::t('backend', 'Laboratory Logs'),
-                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
-                                    'url' => ['/labresultlogs'],
-                                ],
+                                ]
+                               
                             ],
                         ],
-
+                        
+                        
+                        
+                        
+                        
+                        
                         [
                             'label' => Yii::t('backend', 'Radiology'),
                             'url' => '#',
@@ -368,20 +374,26 @@ $logEntries[] = [
                             //'active' => (Yii::$app->controller->module->id == 'rbac'),
                             'items' => [
                                 [
-
+                                    'label' => Yii::t('backend', 'Rad. w/o Charge Slip'),
+                                    'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
+                                    'url' => ['/radresultlogs'],
+                                ],
+                                [
                                     'label' => Yii::t('backend', 'Radiology Request'),
                                     'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
                                     'url' => ['/radiologyrequestprinting'],
-
+                                ],
+                                
+                                [
                                     'label' => Yii::t('backend', 'Radiology Result'),
                                     'icon' => FAS::icon('file', ['class' => ['nav-icon']]),
                                     'url' => ['/radresult'],
-
-                                ],
-                                
+                                ]
                                 
                             ],
                         ],
+                        
+                        
 
                         
                         [

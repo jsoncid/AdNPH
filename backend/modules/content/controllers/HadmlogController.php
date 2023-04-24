@@ -66,13 +66,14 @@ class HadmlogController extends Controller
     }
     
     
-    public function actionPrint($hpercode)
+    public function actionPrint($hpercode,$enccode)
     {
-        if($this->Validatedata($hpercode))
-        {
+       
                $model = $this->findModel($hpercode);
+               $model2 = $this->findModelHadmlog($enccode);
                 $content =  $this->renderPartial('_chart', [
                  'model' => $model,
+                    'model2' => $model2,
                 ]);
                 
                 $pdf = new Pdf([
@@ -86,21 +87,17 @@ class HadmlogController extends Controller
                 
                 ]);   
                 return $pdf->render();
-        }
-        
-        else
-        {
-            Yii::$app->session->setFlash('error', "Cannot Print Chart inomplete data. Refer to Required column");
-            return $this->redirect(['index']);
-        }
+       
        
     }
 
-    public function actionClinical($hpercode)
+    public function actionClinical($hpercode,$enccode)
     {
         $model = $this->findModel($hpercode);
-        $content = $this->renderPartial('clinical',[
+        $model2 = $this->findModelHadmlog($enccode);
+        $content = $this->renderPartial('_clinical',[
         'model' => $model,
+            'model2' => $model2,
     ]);
     $pdf = new Pdf([
         'mode' => Pdf::MODE_CORE,
@@ -114,11 +111,13 @@ class HadmlogController extends Controller
     ]);
     return $pdf->render();
 } 
-public function actionLaboratory($hpercode)
+public function actionLaboratory($hpercode,$enccode)
 {
     $model = $this->findModel($hpercode);
-    $content = $this->renderPartial('laboratory',[
+    $model2 = $this->findModelHadmlog($enccode);
+    $content = $this->renderPartial('_laboratory',[
         'model' => $model,
+        'model2' => $model2,
     ]);
     $pdf = new Pdf([
         'mode' => Pdf::MODE_CORE,
@@ -133,12 +132,16 @@ public function actionLaboratory($hpercode)
     return $pdf->render();
 }
 
-    public function actionOtherlaboratory($hpercode)
+public function actionOtherlaboratory($hpercode,$enccode)
     {
     $model = $this->findModel($hpercode);
-    $content = $this->renderPartial('otherlaboratory',[
+    $model2 = $this->findModelHadmlog($enccode);
+    
+    $content = $this->renderPartial('_otherlaboratory',[
         'model' => $model,
+        'model2' => $model2,
     ]);
+    
     $pdf = new Pdf([
         'mode' => Pdf::MODE_CORE,
         'format' => Pdf::FORMAT_A4,
@@ -152,11 +155,13 @@ public function actionLaboratory($hpercode)
     return $pdf->render();
 }
 
-    public function actionRadiologyrequest($hpercode)
+public function actionRadiologyrequest($hpercode,$enccode)
     {
         $model = $this->findModel($hpercode);
-        $content = $this->renderPartial('radiologyrequest',[
+        $model2 = $this->findModelHadmlog($enccode);
+        $content = $this->renderPartial('_radiologyrequest',[
             'model' => $model,
+            'model2' => $model2,
         ]);
         $pdf = new Pdf([
             'mode' => Pdf::MODE_CORE,
@@ -171,10 +176,11 @@ public function actionLaboratory($hpercode)
         return $pdf->render();
     }
 
-    public function actionTag($hpercode)
+    public function actionTag($hpercode,$enccode)
     {
         $model = $this->findModel($hpercode);
-        $content = $this->renderPartial('tag',[
+        $model2 = $this->findModelHadmlog($enccode);
+        $content = $this->renderPartial('_tag',[
             'model' => $model,
     ]);
     $pdf = new Pdf([
@@ -195,17 +201,14 @@ public function actionLaboratory($hpercode)
 
 
 
-
-
-
-
-
-    public function actionSurgical($hpercode)
+    public function actionSurgical($hpercode,$enccode)
 
     {
         $model = $this->findModel($hpercode);
-        $content =$this->renderPartial('surgical',[
+        $model2 = $this->findModelHadmlog($enccode);
+        $content =$this->renderPartial('_surgical',[
         'model' => $model,
+            'model2' => $model2,
         ]);
         $pdf = new Pdf([
             'mode' => Pdf::MODE_CORE,
@@ -220,12 +223,14 @@ public function actionLaboratory($hpercode)
         return $pdf->render();
     }
 
-        public function actionCf4($hpercode)
+    public function actionCf4($hpercode,$enccode)
 
         {
             $model = $this->findModel($hpercode);
-            $content =$this->renderPartial('cf4',[
+            $model2 = $this->findModelHadmlog($enccode);
+            $content =$this->renderPartial('_cf4',[
                 'model' => $model,
+                'model2' => $model2,
             ]);
             $pdf = new Pdf([
                 'mode' => Pdf::MODE_CORE,
@@ -239,12 +244,14 @@ public function actionLaboratory($hpercode)
             ]);
             return $pdf->render();
         }
-        public function actionNewborninformation($hpercode)
+        public function actionNewborninformation($hpercode,$enccode)
 
         {
             $model = $this->findModel($hpercode);
-            $content =$this->renderPartial('newborninformation',[
+            $model2 = $this->findModelHadmlog($enccode);
+            $content =$this->renderPartial('_newborninformation',[
                 'model' => $model,
+                'model2' => $model2,
             ]);
             $pdf = new Pdf([
                 'mode' => Pdf::MODE_CORE,
@@ -285,7 +292,7 @@ public function actionLaboratory($hpercode)
     }
     protected function findModelHadmlog($enccode)
     {
-        if (($model = Hadmlog::findOne($id)) !== null) {
+        if (($model = Hadmlog::findOne($enccode)) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');

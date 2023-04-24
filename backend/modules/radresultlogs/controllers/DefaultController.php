@@ -1,17 +1,17 @@
 <?php
 
-namespace backend\modules\labresultlogs\controllers;
+namespace backend\modules\radresultlogs\controllers;
 
-use Yii;
 use common\models\Hdocord;
-use common\models\Pholabresultlogs;
-use backend\modules\labresultlogs\models\PholabresultlogsSearch;
+use common\models\PhoLabresult;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use backend\modules\labresultlogs\models\HdocordSearch;
+use backend\modules\radresultlogs\models\HdocordSearch;
+
 /**
- * Default controller for the `labresultlogs` module
+ * Default controller for the `radresultlogs` module
  */
 class DefaultController extends Controller
 {
@@ -36,16 +36,14 @@ class DefaultController extends Controller
     {
         $searchModel = new HdocordSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere(['or', 'pcchrgcod=""', 'pcchrgcod is null']) ;
-        $dataProvider->query->andFilterWhere(['orcode' => 'LABOR']);
+        $dataProvider->query->andWhere(['or', 'pcchrgcod=""', 'pcchrgcod is null']);
+        //$dataProvider->query->andFilterWhere(['dostat' => 'I']);
         //$dataProvider->query->andFilterWhere(['estatus' => 'S']);
-        //$dataProvider->query->andFilterWhere(['dostat' => 'A']);
+        $dataProvider->query->andFilterWhere(['orcode' => 'RADIO']);
         
-      
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-           
         ]);
     }
     
@@ -54,29 +52,11 @@ class DefaultController extends Controller
         $docointkey=$id;
         
         $model2 = $this->findModelHdocord($docointkey);
-        $model2->estatus = 'P';
+        $model2->dostat = 'A';
         $model2->save();
         
         return $this->redirect(['index']);
-        /*
-        if ($model->load(Yii::$app->request->post()) && ) {
-            return $this->redirect(['view', 'docointkey' => $model->docointkey]);
-        }
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-        
-        
-        $searchModel = new HdocordSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andWhere('pcchrgcod is null');
-        
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            
-        ]);
-        */
+
     }
     
     protected function findModelHdocord($docointkey)
@@ -87,10 +67,10 @@ class DefaultController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
     
-
+    
     protected function findModel($rf_id_logs)
     {
-        if (($model = Pholabresultlogs::findOne($id)) !== null) {
+        if (($model = PhoLabresult::findOne($id)) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');

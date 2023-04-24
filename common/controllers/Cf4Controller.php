@@ -15,6 +15,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\Hadmlog;
+use common\models\Herlog;
 use common\models\Hperson;
 use common\models\Hbed;
 use common\models\Hmrhisto;
@@ -43,8 +44,10 @@ class Cf4Controller extends Controller
     static  function AdmissionDiagnosis($enccode)
     {
         $desc = "------";
+        
         $model = Hadmlog::find()->where(['enccode'=>$enccode])->one();
-        if($model->admtxt != null){$desc = $model->admtxt;}
+        if($model != null){
+            if($model->admtxt != null){$desc = $model->admtxt;}}
         return $desc;
     }
     
@@ -283,6 +286,50 @@ class Cf4Controller extends Controller
         else {$desc = "No course in the ward on ".$modelenc->encdate;}
         
         return $desc;
+    }
+    
+    
+    static  function CourseInTheWardDischarge($enccode)
+    {
+        $desc = null;
+        $admdate = null;
+        $disdate = null;
+        $modelenctr = Henctr::find()->where(['enccode'=>$enccode])->one();
+        
+        if($modelenctr->toecode == 'ADM')
+        {
+            $m = Hadmlog::find()->where(['enccode'=>$enccode])->one();
+            $admdate =strtotime(substr($m->admdate, 0,10)) ;
+            $disdate =strtotime(substr($m->disdate, 0,10)) ;
+            $tempadmdate = $m->admdate;
+        }
+        elseif ($modelenctr->toecode == 'ER')
+        {
+            $m = Herlog::find()->where(['enccode'=>$enccode])->one();
+            $admdate = strtotime(substr($m->erdate, 0,10))  ;
+            $disdate = strtotime(substr($m->erdtedis, 0,10));
+            $tempadmdate = $m->erdate;
+        }
+        
+        if($disdate!=null)
+        {
+            $totaldays = ($disdate - $admdate)/60/60/24;
+            $currentdate = $tempadmdate;
+            for ($x = 0; $x <= $totaldays; $x++) {
+               $desc = $desc.date('Y-m-d', strtotime($currentdate . ' +'.$x.' day'))." - ";
+               $desc = $desc.Cf4Controller::CourseInTheWardDate($enccode,date('Y-m-d', strtotime($currentdate . ' +'.$x.' day')))."<br>";
+            }
+        }
+        return  $desc;
+    }
+    
+    static  function CourseInTheWardDate($enccode,$date)
+    {
+        $model = Hcrsward::find()->where(['enccode'=>$enccode])->andFilterWhere(['like', 'dtetake', $date])->one();
+        if($model != null)
+        {return $model->crseward;}
+        else {return null;}
+        
     }
 
 

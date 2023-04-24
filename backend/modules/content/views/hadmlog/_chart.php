@@ -2,7 +2,6 @@
 
 
 use yii\helpers\Html;
-use yii\grid\GridView;
 use common\models\Haddr;
 use common\models\Hbrgy;
 use common\models\Hcity;
@@ -10,154 +9,18 @@ use common\models\Hprov;
 use common\models\Htelep;
 use common\models\Hadmlog;
 use backend\assets\HeaderAsset;
+use common\controllers\PatiendetailsController;
 
 HeaderAsset:: register($this);
 $this->registerCssFile("/backend/web/css/header.css");
 
-$address = "";
-$modeladdr = Haddr::find()
-->where(['hpercode' =>  $model->hpercode])
-->one();
+$address = PatiendetailsController::Address($model->hpercode);
+$contact = PatiendetailsController::Contact($model->hpercode);
+$age = PatiendetailsController::Age($model2->enccode);
 
-$modelbrg = Hbrgy::find()
-->where(['bgycode' =>  $modeladdr->brg])
-->one();
-
-$modelcitymun = Hcity::find()
-->where(['ctycode' =>  $modeladdr->ctycode])
-->one();
-
-$modelprov = Hprov::find()
-->where(['provcode' =>  $modeladdr->provcode])
-->one();
-if($modelbrg != NULL)
-{
-    $address = $modeladdr->patstr.', '.$modelbrg->bgyname.', '.$modelcitymun->ctyname.', '.$modelprov->provname;
-}
-else
-{
-    $address = None;
-}
-
-$contact = "";
-$modelcontact = Htelep::find()
-->where(['hpercode' => $model->hpercode])
-->one();
-
-if($modelcontact != NULL)
-{
-    $contact= $modelcontact->pattel;
-}
-
-else
-{
-    $contact = "None";
-}
-
-$age="";
-$modelage= Hadmlog::find()
-->where(['hpercode' => $model->hpercode])
-->one();
-
-if($modelage !== NULL)
-{
-  $age=$modelage->patage;
-}
-else
-{
-  $age= "None";
-}
 ?>
 
-
-<!-- MONITORING SHEET -->
-<header class="container">
-    <div class= "image1">
-    <?php echo Html::img('@web/img/adnlogo.jpg', ['alt' => 'adnlogo', 'style' => 'width:65px;height: 65px']); ?>
-    </div>
-        <div class= "header">
-             Republic of the Philippines <br>
-            <b>PROVINCIAL HEALTH OFFICE </b> <br>
-            Agusan del Norte Provincial Hospital <br>
-            Libertad, Butuan City <br>
-            Tel. No. (085) 817-3390 <br> &nbsp;
-        </div>
-            <div class= "image2">
-                <?php echo Html::img('@web/img/phologo.jpg', ['alt' => 'phologo', 'style' => 'width:65px;height: 65px']); ?>
-            </div>
-</header>
-
-<hr style="height: 2px;
-           background: teal;
-           margin-bottom: 0;
-           box-shadow: 0px 0px 4px 2px rgba(204,204,204,1);">
-
-
-<table style="width:100% ;text-align: center; ">
-  <tr>
-     <td ><h3>MONITORING SHEET</h3></td>
-  </tr>
-</table>
-
-
-
-<table style="width:100% ;text-align: center; border: 1px solid black; border-collapse: collapse;">
-	<tr >
-	
-     <th align=center style="border: 1px solid black; border-collapse: collapse; "> DATE</th> 
-     <th align=center style="border: 1px solid black; border-collapse: collapse; "> TIME</th> 
-     <th align=center style="border: 1px solid black; border-collapse: collapse; "> TEMP</th> 
-     <th align=center style="border: 1px solid black; border-collapse: collapse; "> BP</th> 
-      <th align=center style="border: 1px solid black; border-collapse: collapse; "> PR/CR</th> 
-       <th align=center style="border: 1px solid black; border-collapse: collapse; "> RR</th> 
-        <th align=center style="border: 1px solid black; border-collapse: collapse; "> O2 SAT</th> 
-		<th align=center style="border: 1px solid black; border-collapse: collapse; "> FHT</th>
-         <th align=center style="border: 1px solid black; border-collapse: collapse; "> SIGNATURE</th> 
-		 
-  	</tr>
-  	
-   <?php 
-  	     for($i=0;$i<24;$i++)
-  	     {
-  	?>
-      	<tr>
-         <td style="border: 1px solid black; border-collapse: collapse;height:30;width:80px "></td> 
-         <td style="border: 1px solid black; border-collapse: collapse;width:60px ;"></td> 
-         <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td> 
-         <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td> 
-         <td style="border: 1px solid black; border-collapse: collapse;width:30px "></td> 
-         <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td> 
-         <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td> 
-		 <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td>
-         <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td> 
-      	</tr>
-  	<?php }
-  	?>
-</table>
-
-
-<hr style="height: 2px;
-           background: teal;
-           margin-bottom: 0;
-           box-shadow: 0px 0px 4px 2px rgba(204,204,204,1);">
-
-
-<!-- Footer Monitoring Sheet -->
-
-<footer class = "footer">
-<div class="timesdate">
-    Generated on:
-    <?php echo date ("Y-m-d");?>
-    <?php date_default_timezone_set("Hongkong");
-        echo date ("h:i a"); ?>
-       || Clerk: <?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?>
-</div>
-</footer>
-<br>
-<br><br> <br>
-<!-- End of Monitoring Sheet -->
-
-
+<!-- CLINICAL COVER Sheet -->
 <header class="container1">
     <div class= "image3">
     <?php echo Html::img('@web/img/adnlogo.jpg', ['alt' => 'adnlogo', 'style' => 'width:65px;height: 65px']); ?>
@@ -182,7 +45,7 @@ else
 
 <table style="width:100% ;text-align: center; ">
 <tr  >
-     <td ><h3>CLINICAL COVER SHEET</h3></td>
+     <td ><h2>CLINICAL COVER SHEET</h2></td>
   </tr>
 </table>
 <table style="width:100% ;text-align: left">
@@ -229,7 +92,7 @@ else
     <td>Civil Status</td>
     <td>:</td>
     <td>
-    <?php echo $model->patcstat; ?></td>
+    <?php echo PatiendetailsController::Civilstatus($model->hpercode); ?></td>
     </td> 
     <td>Nationality</td>
     <td>:</td>
@@ -241,7 +104,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age; ?>
     </td> 
     <td>Religion</td>
     <td>:</td>
@@ -249,8 +112,9 @@ else
     <?php echo $model->relcode; ?>
     </td> 
   </tr>
-
 </table>
+
+<br>
 <table style="width:100% ;text-align: center; border: 1px solid black; border-collapse: collapse;">
 	<tr>
      <td style="border: 1px solid black; border-collapse: collapse;width:50%;" valign="top" >Type of Admission<br>[&nbsp;&nbsp;]New&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;]Old&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;]Former OPD<br> 
@@ -264,7 +128,7 @@ else
   	</tr>
   	
   	<tr>
-     <td style="border: 1px solid black; border-collapse: collapse;height:30" ><?php echo $model->datemod; ?></td>
+     <td style="border: 1px solid black; border-collapse: collapse;height:30" ><?php echo date('m/d/Y h:i:s a', strtotime($model2->admdate)); ?></td>
      <td style="border: 1px solid black; border-collapse: collapse;" ></td>
   	</tr>
   	</table>
@@ -272,10 +136,10 @@ else
     <table style="width:100% ;text-align: center; border: 1px solid black; border-collapse: collapse;">
   	
   	<tr>
-     <td style="border: 1px solid black; border-collapse: collapse;width:50% ;height:80;" valign="bottom">Chief Complaint</td>
+     <td style="border: 1px solid black; border-collapse: collapse;width:50% ;height:120;" valign="bottom">Chief Complaint</td>
      <td style="border: 1px solid black; border-collapse: collapse;text-align:center" valign="bottom" >
 
-     <table style="width:100% ;text-align: center; border: 1px solid black;height:100; border-collapse: collapse;">
+     <table style="width:100% ;text-align: center; border: 1px solid black;height:120; border-collapse: collapse;">
          	 		<tr>
                         <td style="border: 0px solid black; border-collapse: collapse;" valign="top" colspan="3"><h5>DISPOSITION</h5></td>
                          
@@ -320,13 +184,13 @@ else
 <table style="width:100% ;text-align: center; border: 1px solid black; border-collapse: collapse;">
   	
   	<tr>
-     <td style="border: 1px solid black; border-collapse: collapse;width:50% ;height:90;" valign="bottom">Admitting Impression</td>
+     <td style="border: 1px solid black; border-collapse: collapse;width:50% ;height:130;" valign="bottom">Admitting Impression</td>
      <td style="border: 1px solid black; border-collapse: collapse;text-align:center" valign="bottom" >Final Diagnosis & ICD Code:</td>
   	</tr>
   	
   	
   	<tr>
-     <td style="border: 1px solid black; border-collapse: collapse;width:50% ;height:80;" valign="bottom">Signature over Printed Name<br>Admitting Physician</td>
+     <td style="border: 1px solid black; border-collapse: collapse;width:50% ;height:90;" valign="bottom">Signature over Printed Name<br>Admitting Physician</td>
      <td style="border: 1px solid black; border-collapse: collapse;" valign="bottom" >Signature over Printed Name<br>Attending Physician</td>
   	</tr>
 </table>
@@ -413,10 +277,138 @@ else
 </div>
 </footer>
 <br>
+
+<!-- CLINICAL COVER Sheet -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- MONITORING SHEET -->
+<header class="container">
+    <div class= "image1">
+    <?php echo Html::img('@web/img/adnlogo.jpg', ['alt' => 'adnlogo', 'style' => 'width:65px;height: 65px']); ?>
+    </div>
+        <div class= "header">
+             Republic of the Philippines <br>
+            <b>PROVINCIAL HEALTH OFFICE </b> <br>
+            Agusan del Norte Provincial Hospital <br>
+            Libertad, Butuan City <br>
+            Tel. No. (085) 817-3390 <br> &nbsp;
+        </div>
+            <div class= "image2">
+                <?php echo Html::img('@web/img/phologo.jpg', ['alt' => 'phologo', 'style' => 'width:65px;height: 65px']); ?>
+            </div>
+</header>
+
+<hr style="height: 2px;
+           background: teal;
+           margin-bottom: 0;
+           box-shadow: 0px 0px 4px 2px rgba(204,204,204,1);">
+
+
+<table style="width:100% ;text-align: center; ">
+  <tr>
+     <td ><h2>MONITORING SHEET</h2></td>
+  </tr>
+</table>
+
+
+
+<table style="width:100% ;text-align: center; border: 1px solid black; border-collapse: collapse;">
+	<tr >
+	
+     <th align=center style="border: 1px solid black; border-collapse: collapse; "> DATE</th> 
+     <th align=center style="border: 1px solid black; border-collapse: collapse; "> TIME</th> 
+     <th align=center style="border: 1px solid black; border-collapse: collapse; "> TEMP</th> 
+     <th align=center style="border: 1px solid black; border-collapse: collapse; "> BP</th> 
+      <th align=center style="border: 1px solid black; border-collapse: collapse; "> PR/CR</th> 
+       <th align=center style="border: 1px solid black; border-collapse: collapse; "> RR</th> 
+        <th align=center style="border: 1px solid black; border-collapse: collapse; "> O2 SAT</th> 
+		<th align=center style="border: 1px solid black; border-collapse: collapse; "> FHT</th>
+         <th align=center style="border: 1px solid black; border-collapse: collapse; "> SIGNATURE</th> 
+		 
+  	</tr>
+  	
+   <?php 
+  	     for($i=0;$i<24;$i++)
+  	     {
+  	?>
+      	<tr>
+         <td style="border: 1px solid black; border-collapse: collapse;height:30;width:80px "></td> 
+         <td style="border: 1px solid black; border-collapse: collapse;width:60px ;"></td> 
+         <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td> 
+         <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td> 
+         <td style="border: 1px solid black; border-collapse: collapse;width:30px "></td> 
+         <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td> 
+         <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td> 
+		 <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td>
+         <td style="border: 1px solid black; border-collapse: collapse;width:50px "></td> 
+      	</tr>
+  	<?php }
+  	?>
+</table>
+
+
+<table style="width:100% ;text-align: left">
+  <tr>
+    <td style="width:150px ;">Patient's Name</td>
+    <td style="width:20px ;">:</td>
+    <td>
+    <?php echo $model->patlast.' '.$model->patsuffix.', '.$model->patfirst.' '.$model->patmiddle; ?>
+    </td> 
+  </tr>
+  <tr>
+    <td>Sex</td>
+    <td>:</td>
+    <td>
+    <?php echo $model->patsex; ?>
+    </td> 
+  </tr>
+  <tr>
+    <td>Age</td>
+    <td>:</td>
+    <td>
+    <?php echo $age ?>
+    </td> 
+  </tr>
+</table>
+
+
+
+<hr style="height: 2px;
+           background: teal;
+           margin-bottom: 0;
+           box-shadow: 0px 0px 4px 2px rgba(204,204,204,1);">
+
+
+<!-- Footer Monitoring Sheet -->
+
+<footer class = "footer">
+<div class="timesdate">
+    Generated on:
+    <?php echo date ("Y-m-d");?>
+    <?php date_default_timezone_set("Hongkong");
+        echo date ("h:i a"); ?>
+       || Clerk: <?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?>
+</div>
+</footer>
 <br>
-<br>
-<br>
-<br>
+<br><br> <br>
+<!-- End of Monitoring Sheet -->
+
+
+
+
+
 
 <!-- Doctor's Order -->
 <header class="container1">
@@ -442,7 +434,7 @@ else
 
 <table style="width:100% ;text-align: center; ">
   <tr>
-     <td ><h3>DOCTOR'S ORDER</h3></td>
+     <td ><h2>DOCTOR'S ORDER</h2></td>
   </tr>
 </table>
 <table style="width:100% ;text-align: center; border: 1px solid black; border-collapse: collapse;">
@@ -484,7 +476,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age ?>
     </td> 
   </tr>
 </table>
@@ -529,11 +521,9 @@ else
 
 <table style="width:100% ;text-align: center; ">
   <tr>
-     <td ><h3>PAGTUGOT</h3></td>
+     <td ><h2>PAGTUGOT (WAIVER)</h2></td>
   </tr>
-    <tr>
-     <td ><h3>(WAIVER)</h3></td>
-  </tr>
+  
 </table>
 <table style="width:100% ;text-align:justify ; ">
   <tr>
@@ -588,7 +578,6 @@ else
    
    <tr>
      <td>
-     	<br>
      	Akong gikuhaan ang mga hospital staff/personnel sa ADNPH sa unsa mang responsibilidad kung unsa man ugaling ang 
      	dangatan kanako/akong pasyente sa akong desisyon nga gihimo.
      </td>
@@ -596,7 +585,7 @@ else
 </table>
 <table style="width:100% ;text-align:center;">
   <tr>
-     <td style="width:50%;height:80 "  valign="bottom">
+     <td style="width:50%;height:60 "  valign="bottom">
      <?php echo $model->patlast.' '.$model->patsuffix.', '.$model->patfirst.' '.$model->patmiddle; ?>
      
      </td>
@@ -640,20 +629,9 @@ else
        || Clerk: <?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?>
 </div>
 </footer>
-<table style="width:100% ;text-align: center; border: 0px solid black; border-collapse: collapse;">
-        </footer>
-  	<?php 
-  	     for($i=0;$i<25;$i++)
-  	     {
-  	?>
-      	<tr>
-         <td style="border: 0px solid black; border-collapse: collapse;height:20 "></td> 
-      	</tr>
-  	<?php 
-  	     }
-  	?>
-</table>
 
+
+<br>
 
 <!-- Consent to Care -->
 <header class="container1">
@@ -678,7 +656,7 @@ else
 
 <table style="width:100% ;text-align: center; ">
   <tr>
-     <td ><h3>CONSENT TO CARE</h3></td>
+     <td ><h2>CONSENT TO CARE</h2></td>
   </tr>
 </table>
 
@@ -701,7 +679,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age ?>
     </td> 
   </tr>
 </table>
@@ -715,7 +693,7 @@ else
   </tr>
   <tr>
      <td>
-     	<br>
+     	
      	2.	I ALSO GIVE AUTHORIZATION for the hospital to supply information for my medical  records, my insurance and for my attorney.
      </td>
   </tr>
@@ -723,7 +701,7 @@ else
 
 <table style="width:100% ;text-align:center;">
 <tr>
-     <td style="width:50%;height:40"  valign="bottom">
+     <td style="width:50%;height:30"  valign="bottom">
      	
      
      </td>
@@ -754,14 +732,14 @@ else
   </tr>
   <tr>
      <td>
-     	<br>
+
      	The authorization must be signed by the patient  or the next kin in case of minor or if the patient is physically and mentally incompetent. Patient is a minor of _________________________ . Patient is unable to sign because of _________________________ 
      </td>
   </tr>
 </table>
 
 <table style="width:100% ;text-align:center;"><tr>
-     <td style="width:50%;height:80 "  valign="bottom">
+     <td style="width:50%;height:50 "  valign="bottom">
      	
      
      </td>
@@ -803,28 +781,25 @@ else
            box-shadow: 0px 0px 4px 2px rgba(204,204,204,1);">
 
 <footer class = "footer">
-<div class="timesdate">
-    Generated on:
-    <?php echo date ("Y-m-d");?>
-    <?php date_default_timezone_set("Hongkong");
-        echo date ("h:i a"); ?>
-       || Clerk: <?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?>
-
-
-       <table style="width:100% ;text-align: center; border: 0px solid black; border-collapse: collapse;">
-        </footer>
-  	<?php 
-  	     for($i=0;$i<19;$i++)
-  	     {
-  	?>
-      	<tr>
-         <td style="border: 0px solid black; border-collapse: collapse;height:20 "></td> 
-      	</tr>
-  	<?php 
-  	     }
-  	?>
-</table>
+    <div class="timesdate">
+        Generated on:
+        <?php echo date ("Y-m-d");?>
+        <?php date_default_timezone_set("Hongkong");
+            echo date ("h:i a"); ?>
+           || Clerk: <?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?>
+    </div>
+</footer>
 <!-- End of Consent to Care -->
+
+
+
+
+
+
+
+
+
+
 
 <!-- MEDICAL ABSTRACT -->
 <header class="container1">
@@ -849,7 +824,7 @@ else
 
 <table style="width:100% ;text-align: center; ">
   <tr>
-     <td ><h3>MEDICAL ABSTRACT</h3></td>
+     <td ><h2>MEDICAL ABSTRACT</h2></td>
   </tr>
 </table>
 <table style="width:100% ;text-align: left">
@@ -871,7 +846,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age ?>
     </td> 
   </tr>
   <tr>
@@ -885,57 +860,56 @@ else
 
 <table style="width:100% ;text-align:center;">
   <tr>
-     <td style="width:50%;height:80 "  valign="bottom">
-     	ORDER OF RECORDING:
-     
+     <td style="width:50%;height:40 "  valign="bottom">
+     	<h3>ORDER OF RECORDING:</h3>
      </td>
   </tr>
 </table>
 
 <table style="width:100% ;text-align: left">
   <tr>
-    <td style="width:200px;height:70;" valign="top">1. Brief History</td>
+    <td style="width:200px;height:90;" valign="top">1. Brief History</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     </td> 
   </tr>
   <tr>
-    <td style="width:200px;height:70;" valign="top">2. Pertinent Physical Findings</td>
-    <td style="width:20px ;" valign="top">:</td>
-    <td>
-    	
-    </td> 
-  </tr>
-  <tr>
-    <td style="width:200px;height:70;" valign="top">3. Impression</td>
+    <td style="width:200px;height:90;" valign="top">2. Pertinent Physical Findings</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
     </td> 
   </tr>
   <tr>
-    <td style="width:200px;height:70;" valign="top">4. Medication</td>
+    <td style="width:200px;height:90;" valign="top">3. Impression</td>
+    <td style="width:20px ;" valign="top">:</td>
+    <td>
+    	
+    </td> 
+  </tr>
+  <tr>
+    <td style="width:200px;height:90;" valign="top">4. Medication</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
     </td> 
         </tr>
     <tr>
-    <td style="width:200px;height:70;" valign="top">5. Procedures</td>
+    <td style="width:200px;height:90;" valign="top">5. Procedures</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
     </td> 
   </tr>
   <tr>
-    <td style="width:200px;height:70;" valign="top">6. Final Diagnosis</td>
+    <td style="width:200px;height:90;" valign="top">6. Final Diagnosis</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
     </td> 
   </tr>
   <tr>
-    <td style="width:200px;height:70;" valign="top">7. Recommendation</td>
+    <td style="width:200px;height:90;" valign="top">7. Recommendation</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
@@ -944,7 +918,7 @@ else
         </table>
         <table style="width:100% ;text-align: right">
   <tr>
-    <td style="width:200px;height:70;" valign="bottom">
+    <td style="width:200px;height:90;" valign="bottom">
     	__________________________________________<br>
     	Physician's Signature Over Printed Name<br>
     	Lic. No. __________________ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -957,27 +931,16 @@ else
            margin-bottom: 0;
            box-shadow: 0px 0px 4px 2px rgba(204,204,204,1);">
 <footer class = "footer">
-<div class="timesdate">
+	<div class="timesdate">
     Generated on:
     <?php echo date ("Y-m-d");?>
     <?php date_default_timezone_set("Hongkong");
         echo date ("h:i a"); ?>
-       || Clerk:<?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?>
-        </footer>
-        <table style="width:100% ;text-align: center; border: 0px solid black; border-collapse: collapse;">
-
-  	<?php 
-  	     for($i=0;$i<6;$i++)
-  	     {
-  	?>
-      	<tr>
-         <td style="border: 0px solid black; border-collapse: collapse;height:20 "></td> 
-      	</tr>
-  	<?php 
-  	     }
-  	?>
-</table>
+       || Clerk:<?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?> 
+      </div>
+</footer>
 <!-- End of Medical Abstrat -->
+
 
 <!-- Discharge Summary -->
 <header class="container1">
@@ -1003,7 +966,7 @@ else
 
 <table style="width:100% ;text-align: center; ">
   <tr>
-     <td ><h3>DISCHARGE SUMMARY</h3></td>
+     <td ><h2>DISCHARGE SUMMARY</h2></td>
   </tr>
 </table>
 
@@ -1028,7 +991,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age ?>
     </td> 
   </tr>
   
@@ -1043,8 +1006,8 @@ else
 
 <table style="width:100% ;text-align:center;">
   <tr>
-     <td style="width:50%;height:80 "  valign="bottom">
-     	ORDER OF RECORDING:
+     <td style="width:50%;height:40"  valign="bottom">
+     	<h3>ORDER OF RECORDINg:</h3>
      
      </td>
   </tr>
@@ -1052,49 +1015,49 @@ else
 
 <table style="width:100% ;text-align: left">
   <tr>
-    <td style="width:200px;height:70;" valign="top">1. Brief History</td>
+    <td style="width:200px;height:90;" valign="top">1. Brief History</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
     </td> 
   </tr>
   <tr>
-    <td style="width:200px;height:70;" valign="top">2. Pertinent Physical Findings</td>
+    <td style="width:200px;height:90;" valign="top">2. Pertinent Physical Findings</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
     </td> 
   </tr>
   <tr>
-    <td style="width:200px;height:70;" valign="top">3. Impression</td>
+    <td style="width:200px;height:90;" valign="top">3. Impression</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
     </td> 
   </tr>
   <tr>
-    <td style="width:200px;height:70;" valign="top">4. Medication</td>
+    <td style="width:200px;height:90;" valign="top">4. Medication</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
     </td> 
   </tr>
   <tr>
-    <td style="width:200px;height:70;" valign="top">5. Procedures</td>
+    <td style="width:200px;height:90;" valign="top">5. Procedures</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
     </td> 
   </tr>
   <tr>
-    <td style="width:200px;height:70;" valign="top">6. Final Diagnosis</td>
+    <td style="width:200px;height:90;" valign="top">6. Final Diagnosis</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
     </td> 
   </tr>
   <tr>
-    <td style="width:200px;height:70;" valign="top">7. Recommendation</td>
+    <td style="width:200px;height:90;" valign="top">7. Recommendation</td>
     <td style="width:20px ;" valign="top">:</td>
     <td>
     	
@@ -1105,7 +1068,7 @@ else
 
 <table style="width:100% ;text-align: right">
   <tr>
-    <td style="width:200px;height:70;" valign="bottom">
+    <td style="width:200px;height:90;" valign="bottom">
     	_________________________________<br>
     	Physician's Signature Over Printed Name<br>
     	Lic. No. __________________ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1128,16 +1091,6 @@ else
 
         <table style="width:100% ;text-align: center; border: 0px solid black; border-collapse: collapse;">
 
-<?php 
-     for($i=0;$i<7;$i++)
-     {
-?>
-    <tr>
-   <td style="border: 0px solid black; border-collapse: collapse;height:20 "></td> 
-    </tr>
-<?php 
-     }
-?>
 </table>
     <!-- End of Discharge Summary -->
 
@@ -1165,14 +1118,14 @@ else
         
            <table style="width:100% ;text-align: center; ">
   <tr>
-     <td ><h3>IVF SHEET</h3></td>
+     <td ><h2>IVF SHEET</h2></td>
   </tr>
 </table>
 <table style="width:100% ;text-align: center; border: 1px solid black; border-collapse: collapse;">
 	<tr>
-     <th align=center style="border: 1px solid black; border-collapse: collapse; ">DATE</th> 
+     <th align=center style="border: 1px solid black; border-collapse: collapse;width:60px;">DATE</th> 
      <th align=center style="border: 1px solid black; border-collapse: collapse; ">BOT NO.</th> 
-     <th align=center style="border: 1px solid black; border-collapse: collapse; ">NAME OF IVF</th> 
+     <th align=center style="border: 1px solid black; border-collapse: collapse;width:200px; ">NAME OF IVF</th> 
      <th align=center style="border: 1px solid black; border-collapse: collapse; ">INCORPORATION</th> 
       <th align=center style="border: 1px solid black; border-collapse: collapse; ">FLOW RATE</th> 
        <th align=center style="border: 1px solid black; border-collapse: collapse; ">TIME</th> 
@@ -1180,12 +1133,12 @@ else
          <th align=center style="border: 1px solid black; border-collapse: collapse; ">SIGNATURE</th> 
   	</tr>
       <?php 
-  	     for($i=0;$i<23;$i++)
+  	     for($i=0;$i<20;$i++)
   	     {
   	?>
     <tr>
-         <td style="border: 1px solid black; border-collapse: collapse;height:30;width:60px "></td> 
-         <td style="border: 1px solid black; border-collapse: collapse;width:60px ;"></td> 
+         <td style="border: 1px solid black; border-collapse: collapse;height:40;"></td> 
+         <td style="border: 1px solid black; border-collapse: collapse;"></td> 
          <td style="border: 1px solid black; border-collapse: collapse; "></td> 
          <td style="border: 1px solid black; border-collapse: collapse; "></td> 
          <td style="border: 1px solid black; border-collapse: collapse; "></td> 
@@ -1216,7 +1169,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age ?>
     </td> 
   </tr>
 </table>
@@ -1226,27 +1179,17 @@ else
            box-shadow: 0px 0px 4px 2px rgba(204,204,204,1);">
 
 <footer class = "footer">
-<div class="timesdate">
+	<div class="timesdate">
     Generated on:
     <?php echo date ("Y-m-d");?>
     <?php date_default_timezone_set("Hongkong");
         echo date ("h:i a"); ?>
        || Clerk:<?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?>
-        </footer>
+	</div>
+</footer>
 
-        <table style="width:100% ;text-align: center; border: 0px solid black; border-collapse: collapse;">
-        </footer>
-  	<?php 
-  	     for($i=0;$i<3;$i++)
-  	     {
-  	?>
-      	<tr>
-         <td style="border: 0px solid black; border-collapse: collapse;height:20 "></td> 
-      	</tr>
-  	<?php 
-  	     }
-  	?>
-</table>
+  	
+  	
         <!--End of IVF SHEET -->
 
 
@@ -1274,7 +1217,7 @@ else
 
 <table style="width:100% ;text-align: center; ">
   <tr>
-     <td ><h3>MEDICATION SHEET</h3></td>
+     <td ><h2>MEDICATION SHEET</h2></td>
   </tr>
 </table>
 
@@ -1298,7 +1241,7 @@ else
   	     {
   	?>
     <tr>
-         <td style="border: 1px solid black; border-collapse: collapse;height:30;width:60px "></td> 
+         <td style="border: 1px solid black; border-collapse: collapse;height:40;width:60px "></td> 
          <td style="border: 1px solid black; border-collapse: collapse;width:20px ;"></td> 
          <td style="border: 1px solid black; border-collapse: collapse;height:50px; "></td> 
          <td style="border: 1px solid black; border-collapse: collapse;height:50px; "></td> 
@@ -1307,7 +1250,7 @@ else
          <td style="border: 1px solid black; border-collapse: collapse;height:50px; "></td> 
          <td style="border: 1px solid black; border-collapse: collapse;height:50px; "></td> 
           
-      	</tr>
+    </tr>
   	<?php 
   	     }
   	?>
@@ -1315,35 +1258,35 @@ else
 <table style="width:100% ;text-align: center; border: 1px solid black; border-collapse: collapse;">
 <tr>
      <td style="border: 1px solid black; border-collapse: collapse; " colspan="1">SHIFT</td> 
-     <td style="border: 1px solid black; border-collapse: collapse;height:30px;width:150px" colspan="8">SPECIMEN SIGNATURES</td> 
+     <td style="border: 1px solid black; border-collapse: collapse;height:30px;" colspan="8">SPECIMEN SIGNATURES</td> 
   	</tr>
       <tr>
-	<th align=center style="border: 1px solid black; border-collapse: collapse; height:25px;width:208px;">AM</th> 
-		<th align=left style="border: 1px solid black; border-collapse: collapse; width:80px"></th> 
-			<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-				<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-					<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-						<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-							<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
+	<th align=center style="border: 1px solid black; border-collapse: collapse; height:25px;width:60px;">AM</th> 
+		<th align=left style="border: 1px solid black; border-collapse: collapse; width:105px;"></th> 
+			<th align=left style="border: 1px solid black; border-collapse: collapse;width:105px;"></th> 
+				<th align=left style="border: 1px solid black; border-collapse: collapse;width:105px;"></th> 
+					<th align=left style="border: 1px solid black; border-collapse: collapse;width:105px;"></th> 
+						<th align=left style="border: 1px solid black; border-collapse: collapse;width:105px;"></th> 
+							<th align=left style="border: 1px solid black; border-collapse: collapse;width:105px;"></th> 
   	</tr>
       <tr>
-     <th align=center style="border: 1px solid black; border-collapse: collapse;height:25px;width:200px ">PM</th> 
-	 	<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-			<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-				<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-					<th align=left style="border: 1px solid black; border-collapse: collapse; width:80px"></th> 
-						<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-							<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
+     <th align=center style="border: 1px solid black; border-collapse: collapse;height:25px;">PM</th> 
+	 	<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
+			<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
+				<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
+					<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
+						<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
+							<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
  
 	</tr>
     <tr>
-     <th align=center style="border: 1px solid black; border-collapse: collapse;height:25px;width:200px ">NIGHT</th> 
-	 	<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-			<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-				<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-					<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
-						<th align=left style="border: 1px solid black; border-collapse: collapse; width:80px"></th> 
-							<th align=left style="border: 1px solid black; border-collapse: collapse;width:80px "></th> 
+     <th align=center style="border: 1px solid black; border-collapse: collapse;height:25px;">NIGHT</th> 
+	 	<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
+			<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
+				<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
+					<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
+						<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
+							<th align=left style="border: 1px solid black; border-collapse: collapse;"></th> 
  
 	</tr>
 </table>
@@ -1366,7 +1309,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age ?>
     </td> 
   </tr>
 </table>
@@ -1422,7 +1365,7 @@ else
 
 <table style="width:100% ;text-align: center; ">
   <tr>
-     <td ><h3>NURSES NOTES</h3></td>
+     <td ><h2>NURSES NOTES</h2></td>
   </tr>
 </table>
 <table style="width:100% ;text-align: center; border: 1px solid black; border-collapse: collapse;">
@@ -1467,7 +1410,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age ?>
     </td> 
   </tr>
 </table>
@@ -1483,7 +1426,8 @@ else
     <?php date_default_timezone_set("Hongkong");
         echo date ("h:i a"); ?>
        || Clerk:<?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?>
-        </footer>
+</div>
+</footer>
 
 <!-- End of Nurser notes -->
 
@@ -1502,7 +1446,7 @@ else
             <div class= "image4">
                 <?php echo Html::img('@web/img/phologo.jpg', ['alt' => 'phologo', 'style' => 'width:65px;height: 65px']); ?>
             </div>
-
+</header>
 <hr style="height: 2px;
            background: teal;
            margin-bottom: 0;
@@ -1511,7 +1455,7 @@ else
 
 <table style="width:100% ;text-align: center; ">
   <tr>
-     <td ><h3>LABORATORY RESULTS</h3></td>
+     <td ><h2>LABORATORY RESULTS</h2></td>
   </tr>
 </table>
 <table style="width:100% ;text-align: center; border: 1px solid black; border-collapse: collapse;">
@@ -1553,7 +1497,7 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age ?>
     </td> 
   </tr>
   <tr>
@@ -1572,7 +1516,8 @@ else
     <?php date_default_timezone_set("Hongkong");
         echo date ("h:i a"); ?>
        || Clerk:<?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?>
-        </footer>
+</div>
+</footer>
         <!-- End of Laboraty Results -->
 
 
@@ -1600,9 +1545,10 @@ else
 
 <table style="width:100% ;text-align: center; ">
   <tr>
-     <td ><h3>DISCHARGE CLEARANCE</h3></td>
+     <td ><h2>DISCHARGE CLEARANCE</h2></td>
   </tr>
 </table>
+<br>
 <table style="width:100% ;text-align: left">
 <tr>
     <td style="width:150px ;">Patient's Name</td>
@@ -1622,16 +1568,18 @@ else
     <td>Age</td>
     <td>:</td>
     <td>
-    <?php echo substr($age,0,2); ?>
+    <?php echo $age ?>
     </td> 
   </tr>
   <tr>
     <td>Room</td>
     <td>:</td>
 
-    <td style="border: 1px solid black; border-collapse: collapse;width:50% ;height:30;"></td>
+    <td style="border: 1px solid black; border-collapse: collapse;width:50% ;height:30;background-color:#85C1E9"></td>
   </tr>
 </table>
+
+<br>
 <table style="width:100% ;text-align: center; ">
 <tr>
      <td ><h4>Final Diagnosis</h4><p style="color:red">(PALIHUG KOPYAHA ANG GIKAN SA COVER SHEET)</p></td>
@@ -1643,11 +1591,11 @@ else
              	<table style="width:100% ;text-align: center; border: 0px solid black; border-collapse: collapse;">
                   <tr>
                          <td style="border: 1px solid black; border-collapse: collapse;">Final Diagnosis</td> 
-                         <td style="border: 1px solid black; border-collapse: collapse;width:80px">ICD Code</td> 
+                         <td style="border: 1px solid black; border-collapse: collapse;width:130px">ICD Code</td> 
                   </tr>
                   	<tr>
-                        <td style="border: 1px solid black; border-collapse: collapse;height:180 ;" valign="bottom"></td>
-                        <td style="border: 1px solid black; border-collapse: collapse;" valign="bottom">
+                        <td style="border: 1px solid black; border-collapse: collapse;height:230; background-color:#85C1E9" valign="bottom"></td>
+                        <td style="border: 1px solid black; border-collapse: collapse; background-color:#85C1E9" valign="bottom">
                         </td>
                   	</tr>
                 </table>
@@ -1659,7 +1607,7 @@ else
              	<table style="width:100% ;text-align: center; border: 0px solid black; border-collapse: collapse;">
 
                   	<tr>
-                        <td style="border: 1px solid black; border-collapse: collapse;" valign="bottom"><br><br>Attending Physician</td>
+                        <td style="border: 1px solid black; border-collapse: collapse;background-color:#85C1E9" valign="bottom"><br><br>Attending Physician</td>
                   	</tr>
                  
                 </table>
@@ -1674,10 +1622,10 @@ else
                   <tr>
                     
                          <td style="border: 1px solid black; border-collapse: collapse;width:50px;height:30;">Admitted Date and Time</td> 
-                         <td style="border: 1px solid black; border-collapse: collapse;width:120px"><!-- php echo $adddatetime;  --></td> 
+                         <td style="border: 1px solid black; border-collapse: collapse;width:120px"><?php echo date('m/d/Y h:i:s a', strtotime($model2->admdate)); ?></td> 
                          
                          <td style="border: 1px solid black; border-collapse: collapse;width:50px">Discharge Date and Time</td> 
-                         <td style="border: 1px solid black; border-collapse: collapse;width:120px;"></td> 
+                         <td style="border: 1px solid black; border-collapse: collapse;width:120px;background-color:#EDBB99"></td> 
                       	
                   </tr>
                   </table>
@@ -1756,7 +1704,7 @@ else
                                       <tr>
                                         
                                              <td style="border: 1px solid black; border-collapse: collapse;width:120px;height:28 ;">LMP</td> 
-                                             <td style="border: 1px solid black; border-collapse: collapse;" ></td> 
+                                             <td style="border: 1px solid black; border-collapse: collapse;background-color:#85C1E9" ></td> 
                                           	
                                       </tr>
                                       
@@ -1767,7 +1715,7 @@ else
                                       <tr>
                                         
                                              
-                                             <td style="border: 1px solid black; border-collapse: collapse;text-align: center;height:150px;" valign="bottom" >Nurse note/s</td> 
+                                             <td style="border: 1px solid black; border-collapse: collapse;text-align: center;height:150px;background-color:#85C1E9" valign="bottom" >Nurse note/s</td> 
                                           	
                                       </tr>
                                       
@@ -1795,7 +1743,7 @@ else
          (Medical Evaluator)
          </td>
          <td>
-         		<table style="width:100% ;text-align: center; border: 1px solid black;height:100; border-collapse: collapse;">
+         		<table style="width:100% ;text-align: center; border: 1px solid black;height:100; border-collapse: collapse;background-color:#85C1E9">
          	 		<tr>
                         <td style="border: 0px solid black; border-collapse: collapse;" valign="top" colspan="3"><h5>DISPOSITION</h5></td>
                          
@@ -1811,7 +1759,7 @@ else
                       </tr>
          	 	</table>
          	 	
-         	 	<table style="width:100% ;text-align: center; border: 1px solid black;height:100; border-collapse: collapse;">
+         	 	<table style="width:100% ;text-align: center; border: 1px solid black;height:100; border-collapse: collapse;background-color:#85C1E9">
          	 		<tr>
                         <td style="border: 0px solid black; border-collapse: collapse;" valign="top" colspan="3"><h5>CONDITION DISCHARGE</h5></td>
                          
@@ -1836,11 +1784,13 @@ else
            background: teal;
            margin-bottom: 0;
            box-shadow: 0px 0px 4px 2px rgba(204,204,204,1);">
-           <footer class = "footer">
+<footer class = "footer">
 <div class="timesdate">
     Generated on:
     <?php echo date ("Y-m-d");?>
     <?php date_default_timezone_set("Hongkong");
         echo date ("h:i a"); ?>
        || Clerk:<?php echo $model->entryby0->lastname.','.$model->entryby0->firstname; ?>
+        </div>
         </footer>
+        

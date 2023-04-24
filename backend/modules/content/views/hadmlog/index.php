@@ -205,53 +205,29 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                     
-                    [
-                        'label'=>'Required',
-                        'contentOptions' => [
-                            'style' => ['width' => '100px;'],
-                            'class' => 'text-wrap'
-                        ],
-                        'format'=>'text',
-                        'value' => function($model)
-                        {
-                            $validator = "";
-                            if(!ValidateController::Address($model->hpercode)){$validator = $validator."Brgy, ";}
-                            if(!ValidateController::Contact($model->hpercode)){$validator = $validator."Contact, ";}
-                            if(!ValidateController::Civilstatus($model->hpercode)){$validator = $validator."CivilStatus, ";}
-                            
-                            if($validator == ""){
-                                $_SESSION['template'] = '{print} <br>';
-                            }
-                            else {
-                                unset($_SESSION['template']);
-                            }
-                            
-                            
-                            //return ValidateController::Address($model->hpercode);
-                            
-                            return $validator;
-                        },
-                    ],
+                  
                     
-                //['class' => 'yii\grid\ActionColumn', 'template'=>'{print} <br> {clinical} <br> {laboratory} <br> {otherlaboratory} <br> {radiologyrequest} <br> {tag} <br> {surgical} <br> {cf4} <br> {newborninformation}',
-                        ['class' => 'yii\grid\ActionColumn', 'template' => '{print} <br> {tag} <br> {surgical} <br> {cf4} <br> {newborninformation}',
+                ['class' => 'yii\grid\ActionColumn', 'template'=>'{print} <br> {clinical} <br> {laboratory} <br> {otherlaboratory} <br> {radiologyrequest} <br> {tag} <br> {surgical} <br> {cf4} <br> {newborninformation}',
+                  //      ['class' => 'yii\grid\ActionColumn', 'template' => '{print} <br> {tag} <br> {surgical} <br> {cf4} <br> {newborninformation}',
                 'buttons'=>[
         
                             'print' => function($url, $model){
                                     return Html::a(Yii::t('app', 'Chart'),
                                     ['print',
                                     'hpercode' =>$model->hpercode,
+                                    'enccode' =>$model->enccode,
                                     'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
                                         'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
                                         'patage' => intval($model->patage).' yr/s',
                                     ]
                                 );
                             },
-                            /*
+                            
                                 'clinical' => function($url, $model){
                                     return Html::a(Yii::t('app','Clinical Chem Request'),
                                     ['clinical',
                                     'hpercode' =>$model->hpercode,
+                                        'enccode' =>$model->enccode,
                                     'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
                                     'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
                                     'patage' => intval($model->patage).' yr/s',
@@ -263,6 +239,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Html::a(Yii::t('app', 'Laboratory'),
                                 ['laboratory',
                                 'hpercode' =>$model->hpercode,
+                                    'enccode' =>$model->enccode,
                                 'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
                                 'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
                                 'patage' => intval($model->patage).' yr/s',
@@ -273,6 +250,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Html::a(Yii::t('app', 'Other Laboratory'),
                                 ['otherlaboratory',
                                 'hpercode' =>$model->hpercode,
+                                    'enccode' =>$model->enccode,
                                 'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
                                 'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
                                 'patage' => intval($model->patage).' yr/s',
@@ -283,17 +261,19 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Html::a(Yii::t('app', 'Radiology Request'),
                                 ['radiologyrequest',
                                 'hpercode' =>$model->hpercode,
+                                    'enccode' =>$model->enccode,
                                 'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
                                 'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
                                 'patage' => intval($model->patage).' yr/s',
                                 ]
                             );
                             },
-                            */
+                            
                             'tag' => function($url, $model){
                                 return Html::a(Yii::t('app', 'Tag'),
                                 ['tag',
                                 'hpercode' =>$model->hpercode,
+                                    'enccode' =>$model->enccode,
                                 'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
                                 'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
                                 'patage' => intval($model->patage).' yr/s',
@@ -308,6 +288,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Html::a(Yii::t('app', 'Surgical'),
                                 ['surgical',
                                 'hpercode' =>$model->hpercode,
+                                    'enccode' =>$model->enccode,
                                 'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
                                 'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
                                 'patage' => intval($model->patage).' yr/s',
@@ -322,6 +303,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return Html::a(Yii::t('app', 'Cf4'),
                                 ['cf4',
                                 'hpercode' =>$model->hpercode,
+                                    'enccode' =>$model->enccode,
                                 'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
                                 'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
                                 'patage' => intval($model->patage).' yr/s',
@@ -336,6 +318,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return Html::a(Yii::t('app', 'New born Papers'),
                                 ['newborninformation',
                                 'hpercode' =>$model->hpercode,
+                                    'enccode' =>$model->enccode,
                                 'clerk' => $model->admclerk0->firstname.' '.$model->admclerk0->lastname,
                                 'adddatetime' => date('m/d/Y h:i:s a', strtotime($model->admdate)),
                                 'patage' => intval($model->patage).' yr/s',

@@ -9,7 +9,7 @@ use yii\grid\GridView;
  * @var yii\data\ActiveDataProvider $dataProvider
  */
 
-$this->title = 'Patient/s Information Clearance';
+$this->title = 'Patient/s Discharge Clearance';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="hperson-index">
@@ -36,12 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
                    
                     'hpercode',
+                    'encdate',
+                    'toecode',
                    
-                     'patlast',
-                     'patfirst',
-                     'patmiddle',
-                     'patsuffix',
-                     'patprefix',
+                     'hpercode0.patlast',
+                    
+                    'hpercode0.patfirst',
+                     'hpercode0.patmiddle',
+                     'hpercode0.patsuffix',
                     
                     
                     ['class' => 'yii\grid\ActionColumn', 'template' => '{view}',
@@ -50,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'view' => function($url, $model){
                             return Html::a(Yii::t('app', 'Validate'),
                                 ['view',
-                                    'hpercode' =>$model->hpercode,
+                                    'enccode' =>$model->enccode,
                                 ]
                                 );
                             },
